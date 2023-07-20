@@ -33,22 +33,22 @@ export const AddRTO = () => {
         <div  className="form-container">  
             <form>
                 <p className="form-identifire-para">RTO identifiers :</p>
-                <div className="addrto-rows">
+                <div className="form-rows">
                     {formFieldUI("RTO Code", "entityCode", "text")}
                     {formFieldUI("RTO Name", "entityName", "text")}
                     {formFieldUI("KYC Identifier", "kycgstpan", "text")}
                 </div>
                 <p className="form-identifire-para">Address Details :</p>
-                <div className="addrto-rows ">
+                <div className="form-rows ">
                     {formFieldUI("Address", "address", "text")}
                     {formFieldUI("District", "district", "text")}
                 </div>
-                <div className=" addrto-rows rows-state">
+                <div className=" form-rows rows-state">
                     {formFieldUI("State", "state", "text")}
                     {formFieldUI("Pin Code", "pincode", "text")}
                 </div>
                 <p className="form-identifire-para">Contact details :</p>
-                <div className="addrto-rows ">
+                <div className="form-rows ">
                     {formFieldUI("Admin name", "contactName", "text")}
                     {formFieldUI("Email", "emailId", "text")}
                     {formFieldUI("Contact", "contactNo", "text")}      

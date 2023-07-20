@@ -211,7 +211,7 @@ body {
   margin: 0;
   font-size: 15px;
 }
-.addrto-rows{
+.form-rows{
   display: flex;
   gap: 20px;
 }
@@ -223,7 +223,7 @@ body {
     margin-top: 20px;
     padding: 20px;
   }
-  .addrto-rows{
+  .form-rows{
     display: flex;
     flex-direction: column;
     gap: 0;

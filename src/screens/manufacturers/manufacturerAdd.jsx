@@ -22,33 +22,32 @@ export const AddManufacturer = () => {
     }
 
     const formFieldUI = (label, name, type) => {
-        return (<div key = {name} className="form-group col">
-                    <label className="form-label m-0">{label}</label>
+        return (<div key = {name} className="form-group">
+                    <label className="form-label">{label}</label>
                     <input required className="form-control" name={name} type={type} onChange={e=>onChange(e)}></input>
                 </div>)
     }
 
     return (
-        <div  className="w-75 mx-auto mt-5">  
-            <form className = "m-2">
-
-                <p><b>Manufacturer identifiers</b></p>
-                <div className="row">
+        <div  className="form-container">  
+            <form>
+                <p className="form-identifire-para">Manufacturer identifiers</p>
+                <div className="addrto-rows">
                     {formFieldUI("Manufacturer Code", "entityCode", "text")}
                     {formFieldUI("Manufacturer Name", "entityName", "text")}
                     {formFieldUI("KYC Identifier", "kycgstpan", "text")}
                 </div>
-                <p><b>Address Details</b></p>
-                <div className="row">
+                <p className="form-identifire-para">Address Details</p>
+                <div className="form-rows">
                     {formFieldUI("Address", "address", "text")}
                     {formFieldUI("District", "district", "text")}
                 </div>
-                <div className="row">
+                <div className="form-rows">
                     {formFieldUI("State", "state", "text")}
                     {formFieldUI("Pin Code", "pincode", "text")}
                 </div>
-                <p><b>Contact details</b></p>
-                <div className="row">
+                <p className="form-identifire-para">Contact details</p>
+                <div className="form-rows">
                     {formFieldUI("Admin Name", "contactName", "text")}
                     {formFieldUI("Email", "emailId", "text")}
                     {formFieldUI("Contact", "contactNo", "text")}      
