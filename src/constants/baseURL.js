@@ -1,0 +1,1 @@
+export const BaseURL = 'http://www.thexyz.biz:8087/api'
