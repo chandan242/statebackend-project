@@ -2,78 +2,7 @@ import { useState, useEffect } from 'react';
 import useFormValidation from '../../constants/Validation';
 
 export const AddDeviceInventory = () => {    
-    
-    // const [data, setData] = useState({})
-    // const [error,setError] = useState({})
-    
-    // const onChange = (e) => {
-    //     const fieldName = e.target.name
-    //     const value = e.target.value
-    //     // Clear the error for the current field when the user starts typing
-    //     setError((prevErrors) => ({
-    //         ...prevErrors,
-    //         [fieldName]: "",
-    //     }));
-    //     const data_new = {...data}
-    //     data_new[fieldName] = value
-    //     setData(data_new)
-    // }
 
-    // const validateForm = () => {
-    //     let hasErrors = false;
-    //     const newErrors = {};
-        
-    //     const validationRules = {
-    //         imei:{
-    //             required: true,
-    //             minLength: 14,
-    //             maxLength: 16,
-    //             pattern: /^[A-Za-z0-9]+$/,
-    //         },
-    //         device_serialno:{
-    //             required: true,
-    //             minLength: 5,
-    //             maxLength: 16,
-    //             pattern: /^[A-Za-z0-9]+$/,
-    //         },
-    //         model_type:{
-    //             required: true,
-    //             minLength: 5,
-    //             maxLength: 16,
-    //             pattern: /^[A-Za-z0-9]+$/,
-    //         },
-    //         esim_provider:{
-    //             required:true
-    //         },
-    //         iccid:{
-    //             required: true,
-    //             minLength: 5,
-    //             maxLength: 16,
-    //             pattern: /^[A-Za-z0-9]+$/,
-    //         }
-    //     }
-
-    //     for(const fieldName in validationRules){
-    //         const value = data[fieldName];
-    //         const rules = validationRules[fieldName];
-    //         if (rules.required && (!value || value.trim() === "")) {
-    //             newErrors[fieldName] = "Field is required";
-    //             hasErrors = true;
-    //           } else if (rules.minLength && value.length < rules.minLength) {
-    //             newErrors[fieldName] = `Minimum ${rules.minLength} characters required`;
-    //             hasErrors = true;
-    //           } else if (rules.maxLength && value.length > rules.maxLength) {
-    //             newErrors[fieldName] = `Maximum ${rules.maxLength} characters allowed`;
-    //             hasErrors = true;
-    //           } else if (rules.pattern && !rules.pattern.test(value)) {
-    //             newErrors[fieldName] = "Invalid input";
-    //             hasErrors = true;
-    //           }
-    //     }
-
-    //     setError(newErrors);
-    //     return !hasErrors;
-    // }
     const initialData = {
         imei:"",
         device_serialno:'',
