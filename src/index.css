@@ -489,6 +489,8 @@ body {
   width: 300px;
   border-radius: 10px;
   margin-top: 6px;
+  background-color: rgb(241, 240, 240);
+  border: 1px solid rgb(233, 231, 231);
 }
 .card-widget:hover{
   scale: 1.03;
@@ -510,7 +512,13 @@ body {
   font-size: 14px;
 }
 .card-item-icon{
-  width: 10%;
+  margin-top: 10px;
+  color: rgb(0, 0, 0);
+  background-color: #d9d6d6;
+  padding: 10px;
+  border-radius: 20px;
+  /* background-color: white; */
+  /* width: 10%; */
 }
 .card-item-count p{
   font-size: 17px;

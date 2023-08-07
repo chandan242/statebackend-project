@@ -12,37 +12,37 @@ export const MultiCardWidgets = () => {
           count: "2262",
           description: "Rash Turning",
           bgcolor: "#a7a8a8",
-          icon: <GiReturnArrow  size={25}/>
+          icon: <GiReturnArrow  size={35}/>
         },
         {
           count: "10",
           description: "Over Speed",
           bgcolor: "#f5717d",
-          icon: <MdSpeed size={25}/>
+          icon: <MdSpeed size={35}/>
         },
         {
           count: "69",
           description: "Harsh Breaking",
           bgcolor: "#8df2a4",
-          icon: <VscDebugBreakpointUnsupported size={25}/>
+          icon: <VscDebugBreakpointUnsupported size={35}/>
         },
         {
           count: "86",
           description: "Harsh Acceleration",
           bgcolor: "#f0a667",
-          icon: <FaStackOverflow size={25}/>
+          icon: <FaStackOverflow size={35}/>
         },
         {
           count: "11",
           description: "Device Tampered",
           bgcolor: "#7ee7f7",
-          icon: <SiTampermonkey size={25}/>
+          icon: <SiTampermonkey size={35}/>
         },
         {
             count: "8",
             description: "Low Battery",
             bgcolor: "#c78cfa",
-            icon: <BiSolidBatteryLow size={25}/>
+            icon: <BiSolidBatteryLow size={35}/>
         }
       ];
       
