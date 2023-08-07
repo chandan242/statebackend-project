@@ -20,10 +20,12 @@ export const ESIMProviderList = () => {
 
 
     return(
-        <div className="w-90 mx-auto mt-5">
-            <p><b>ESIM Provider List</b></p>
+        <>
+        <p className="table-listp">ESIM Provider List</p>
+        <div className="table-list">
             <DynamicTable data={esimProviders} sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}/>
         </div>
+        </>
     )
 }
 

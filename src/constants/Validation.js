@@ -13,7 +13,7 @@ export const validateUsername = (username) => {
       errors.push("Username cannot be longer than 10 characters");
     }
   
-    if (!/^[a-zA-Z]+$/.test(username)) {
+    if (username && !/^[a-zA-Z]+$/.test(username)) {
       errors.push("Username must contain only letters");
     }
   
@@ -45,9 +45,9 @@ export const validateUsername = (username) => {
     else if (password && password.length > 20) {
       errors.push("Password cannot be longer than 20 characters");
     }
-    else if (!/(?=.*[A-Z])/.test(password)) {
-      errors.push("Password must contain at least one uppercase letter");
-    }
+    // else if (!/(?=.*[A-Z])/.test(password)) {
+    //   errors.push("Password must contain at least one uppercase letter");
+    // }
     else if (!/(?=.*[a-z])/.test(password)) {
       errors.push("Password must contain at least one lowercase letter");
     }
@@ -101,3 +101,66 @@ export function validatePIN(pin) {
   else
     return true
 }
+
+import { useState } from 'react';
+
+const useFormValidation = (initialData, validationRules) => {
+  const [data, setData] = useState(initialData);
+  const [errors, setErrors] = useState({});
+
+  const onChange = (e) => {
+    const fieldName = e.target.name;
+    const value = e.target.value;
+
+    // Clear the error for the current field when the user starts typing
+    setErrors((prevErrors) => ({
+      ...prevErrors,
+      [fieldName]: "",
+    }));
+
+    setData((prevData) => ({
+      ...prevData,
+      [fieldName]: value,
+    }));
+  };
+
+  const validateForm = () => {
+    let hasErrors = false;
+    const newErrors = {};
+
+    for (const fieldName in validationRules) {
+      const value = data[fieldName];
+      const rules = validationRules[fieldName];
+
+      if (rules.required && (!value || value.trim() === "")) {
+        newErrors[fieldName] = "Field is required";
+        hasErrors = true;
+      } else if (rules.minLength && value.length < rules.minLength) {
+        newErrors[fieldName] = `Minimum ${rules.minLength} characters required`;
+        hasErrors = true;
+      } else if (rules.maxLength && value.length > rules.maxLength) {
+        newErrors[fieldName] = `Maximum ${rules.maxLength} characters allowed`;
+        hasErrors = true;
+      } else if (rules.pattern && !rules.pattern.test(value)) {
+        newErrors[fieldName] = "Invalid input";
+        hasErrors = true;
+      } else {
+        // Clear the error message for the field if it is valid
+        newErrors[fieldName] = "";
+      }
+    }
+
+    setErrors(newErrors);
+    return !hasErrors;
+  };
+
+  return {
+    data,
+    errors,
+    setErrors,
+    onChange,
+    validateForm,
+  };
+};
+
+export default useFormValidation;

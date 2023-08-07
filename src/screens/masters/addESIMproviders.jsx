@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { addentity } from "../../apis/entities";
+import { LoadingWidget } from "../../components/loading";
+import { uploadDoc } from "../../apis/uploadFiles";
 
 export const AddESIMProviders = () => {
 
@@ -12,51 +14,76 @@ export const AddESIMProviders = () => {
         setData(data_new)
     }
 
+    const handleFileUpload = async (e) => {
+        const response = await uploadDoc(e.target.files[0])
+        console.log("upload file response", response)
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setIsLoading(true)
         const uploadData = {...data}
         uploadData["entityType"] = "ESM"
-        response = await addentity(uploadData)
-
+        const response = await addentity(uploadData)
+        console.log("response", response)
+        setIsLoading(false)
     }
 
     const formFieldUI = (label, name, type) => {
-        return (<div key = {name} className="form-group col">
-                    <label className="form-label m-0">{label}</label>
-                    <input required className="form-control" name={name} type={type} onChange={e=>onChange(e)}></input>
+        return (<div key = {name} className="form-groups">
+                    <label className="form-labels">{label}</label>
+                    <input required className="form-inputs" name={name} type={type} onChange={e=>onChange(e)}></input>
+                </div>)
+    }
+
+    const fileUploadUI = (label, name, type) => {
+        return (<div key = {name} className="form-groups">
+                    <label className="form-labels">{label}</label>
+                    <input required className="form-inputs" name={name} type={type} onChange={e=>handleFileUpload(e)}></input>
                 </div>)
     }
 
     return (
-        <div  className="w-75 mx-auto mt-5">  
-            <form className = "m-2">
+        <>
+        <p className="form-heading-para">ADD ESIM PROVIDER</p><hr />
+        <div  className="form-container">  
+            {isLoading ? <LoadingWidget /> : <form>
+                <div className = "form-tag">
+                    <p className="form-identifire-para">ESIM Provider identifiers</p>
+                    <div className="form-rows">
+                        {formFieldUI("ESIM Provider Code", "entityCode", "text")}
+                        {formFieldUI("ESIM Provider Name", "entityName", "text")}
+                        {formFieldUI("KYC Identifier", "kycgstpan", "text")}
+                    </div>
+                    <p className="form-identifire-para">Address Details</p>
+                    <div className="form-rows">
+                        {formFieldUI("Address", "address", "text")}
+                        {formFieldUI("District", "district", "text")}
+                    </div>
+                    <div className="form-rows">
+                        {formFieldUI("State", "state", "text")}
+                        {formFieldUI("Pin Code", "pincode", "text")}
+                    </div>
+                    <p className="form-identifire-para">Contact details</p>
+                    <div className="form-rows">
+                        {formFieldUI("Name", "contactName", "text")}
+                        {formFieldUI("Email", "emailId", "text")}
+                        {formFieldUI("Contact", "contactNo", "text")}      
+                    </div>
+                    <p className="form-identifire-para">Document Upload</p>
+                    <div className="form-rows">
+                        {fileUploadUI("Registration Form", "registrationForm", "file")}
+                        {fileUploadUI("API Document", "apiDocuments", "file")}
+                    </div>
+                </div>
 
-                <p><b>ESIM Provider identifiers</b></p>
-                <div className="row">
-                    {formFieldUI("ESIM Provider Code", "entityCode", "text")}
-                    {formFieldUI("ESIM Provider Name", "entityName", "text")}
-                    {formFieldUI("KYC Identifier", "kycgstpan", "text")}
-                </div>
-                <p><b>Address Details</b></p>
-                <div className="row">
-                    {formFieldUI("Address", "address", "text")}
-                    {formFieldUI("District", "district", "text")}
-                </div>
-                <div className="row">
-                    {formFieldUI("State", "state", "text")}
-                    {formFieldUI("Pin Code", "pincode", "text")}
-                </div>
-                <p><b>Contact details</b></p>
-                <div className="row">
-                    {formFieldUI("Admin Name", "contactName", "text")}
-                    {formFieldUI("Email", "emailId", "text")}
-                    {formFieldUI("Contact", "contactNo", "text")}      
+                <div className="form-submit-btn">
+                    <button onClick={e=>handleSubmit(e)}>Save</button>
                 </div>
                    
-                <button className="btn btn-primary" onClick={e=>handleSubmit(e)}>Save</button>
-            </form>
+            </form>}
         </div>
+        </>
     )
 }
 

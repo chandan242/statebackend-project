@@ -1,44 +1,63 @@
-import { useState } from "react"
-import { login } from "../../apis/authentication"
+import { useState } from "react";
+import { login } from "../../apis/authentication";
+import { LoadingWidget } from "../../components/loading";
 
 export const LoginScreen = () => {
-    let token = localStorage.getItem("token")
-    const [data, setData] = useState({})
-    const [isLoading, setIsLoading] = useState(false)
-    
-    const onChange = (e) => {
-        const data_new = {...data}
-        data_new[e.target.name] = e.target.value
-        setData(data_new)
-    }
+  const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setIsLoading(true)
-        response = await login(data)
-    }
+  const onChange = (e) => {
+    const data_new = { ...data };
+    data_new[e.target.name] = e.target.value;
+    setData(data_new);
+  };
 
-    const formFieldUI = (label, name, type) => {
-        return (<div key = {name} className="form-group col">
-                    <label className="form-label m-0">{label}</label>
-                    <input required className="form-control" name={name} type={type} onChange={e=>onChange(e)}></input>
-                </div>)
-    }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    response = await login(data);
+    setIsLoading(false);
+  };
 
+  const formFieldUI = (label, name, type) => {
     return (
-        <div  className="w-75 mx-auto mt-5">  
-            <form className = "m-2">
-                <p><b>Login</b></p>
-                <div className="row">
-                    {formFieldUI("Email ID", "username", "text")}
-                </div>
-                <div className="row">
-                    {formFieldUI("Password", "password", "text")}
-                </div>
-                   
-                <button className="btn btn-primary" onClick={e=>handleSubmit(e)}>Submit</button>
-            </form>
-        </div>
-    )
+      <div key={name} className="form-groups ">
 
-}
+        <label className="form-labels">{label}</label>
+        <input
+          required
+          className="form-inputs"
+          name={name}
+          type={type}
+          onChange={(e) => onChange(e)}
+        ></input>
+
+      </div>
+    );
+  };
+
+  return (
+    <div   className="form-container login-form">
+      {isLoading ? (
+        <LoadingWidget />
+      ) : (
+        <form>
+          <div  className="form-tag">
+          <h4>Login</h4>
+          <div className="">
+            {formFieldUI("Email ID", "username", "text")}
+          </div>
+          <div>
+            {formFieldUI("Password", "password", "password")}
+          </div>
+          </div>
+
+          <div className="form-submit-btn">
+            <button onClick={(e) => handleSubmit(e)}>Login</button>
+          </div>
+
+        </form>
+      )}
+    </div>
+  );
+};

@@ -26,7 +26,7 @@ export const DynamicTable = (params)=>{
 
     const ThData =()=>{
         return column.map((data)=>{
-            return <th className = "text-white" key={data} style={{fontSize:"0.8rem", backgroundColor:"#3d5a80"}}>{data}</th>
+            return <th key={data}>{data}</th>
         })
     }
         // get table row data
@@ -38,7 +38,7 @@ export const DynamicTable = (params)=>{
                         <tr>
                             {
                             column.map((v, index)=>{
-                                return index===0? <td className = "d-flex justify-content-start align-items-center" style={{fontSize:"0.8rem"}}><span>{data[v]}</span><BiDetail size="1rem" className="ml-1"/></td>:<td style={{fontSize:"0.8rem"}}>{data[v] && data[v].toString()}</td>
+                                return index===0? <td className = ""><span>{data[v]}</span><BiDetail size="1rem" className=""/></td>:<td>{data[v] && data[v].toString()}</td>
                             })
                             }
                         </tr>
@@ -67,20 +67,20 @@ export const DynamicTable = (params)=>{
     }
 
     return (
-        <div className="mt-3">
-            <div className="row ml-2 mb-2">
-                {filter_required ? <div className="row col-5">
-                    <input placeholder = "ICCID Number (min 5 char)" className="col-8" type="text" value={searchField} onChange={e=>setSearchField(e.target.value)}/>
-                    <button className="col-3 btn btn-primary ml-1" onClick={e=>searchESIM(e)}><b>search</b></button>
+        <div className="">
+            <div className="">
+                {filter_required ? <div className="">
+                    <input placeholder = "Input VRN / IMEI / ICCID to search" className="" type="text" value={searchField} onChange={e=>setSearchField(e.target.value)}/>
+                    <button className="" onClick={e=>searchESIM(e)}><b>search</b></button>
                 </div> : null}
                 
-                {pageMoverRequired ? <div className="row col-4 float-right">
-                    <button className="col-5 btn btn-secondary ml-1" onClick={e=>decrement(e)}>previous page</button>
-                    <button className="col-5 btn btn-secondary ml-1" onClick={e=>increment(e)}>next page</button>
+                {pageMoverRequired ? <div className="">
+                    <button className="" onClick={e=>decrement(e)}>previous page</button>
+                    <button className="" onClick={e=>increment(e)}>next page</button>
                 </div> : null}
             </div>
-            <div className="scroll_table" style={{width:"100%", overflow: "scroll"}}>
-            <table className="table table-striped" >
+            <div className="scroll_table">
+            <table className="table-striped" >
                 <thead>
                     <tr>{ThData()}</tr>
                 </thead>

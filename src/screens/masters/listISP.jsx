@@ -20,10 +20,12 @@ export const ISPList = () => {
 
 
     return(
-        <div className="w-90 mx-auto mt-5">
-            <p><b>Internet Service Providers</b></p>
+        <>
+        <p className="table-listp">Internet Service Providers</p>
+        <div className="table-list">
             <DynamicTable data={isp} sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}/>
         </div>
+        </>
     )
 }
 

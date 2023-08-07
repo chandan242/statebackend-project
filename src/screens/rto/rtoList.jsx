@@ -20,10 +20,12 @@ export const RTOList = () => {
 
 
     return(
-        <div className="w-90 mx-auto mt-5">
-            <p><b>RTO List</b></p>
+        <>
+        <p className="table-listp">RTO LIST</p>
+        <div className="table-list">
             <DynamicTable data={rtos} sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}/>
         </div>
+        </>
     )
 }
 

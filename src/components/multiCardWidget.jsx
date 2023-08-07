@@ -1,63 +1,73 @@
+import { GiReturnArrow } from "react-icons/gi";
+import { MdSpeed } from "react-icons/md";
+import {VscDebugBreakpointUnsupported} from "react-icons/vsc";
+import { FaStackOverflow } from "react-icons/fa";
+import { BiSolidBatteryLow } from "react-icons/bi";
+import {SiTampermonkey} from "react-icons/si";
+
 export const MultiCardWidgets = () => {
 
     const tiles = [
         {
           count: "2262",
           description: "Rash Turning",
-          bgcolor: "#6c757d",
-          icon: "registered"
+          bgcolor: "#a7a8a8",
+          icon: <GiReturnArrow  size={25}/>
         },
         {
           count: "10",
           description: "Over Speed",
-          bgcolor: "#dc3545",
-          icon: "exclamation-circle"
+          bgcolor: "#f5717d",
+          icon: <MdSpeed size={25}/>
         },
         {
           count: "69",
           description: "Harsh Breaking",
-          bgcolor: "#28a745",
-          icon: "times-circle"
+          bgcolor: "#8df2a4",
+          icon: <VscDebugBreakpointUnsupported size={25}/>
         },
         {
           count: "86",
           description: "Harsh Acceleration",
-          bgcolor: "#ec862e",
-          icon: "user-times"
+          bgcolor: "#f0a667",
+          icon: <FaStackOverflow size={25}/>
         },
         {
           count: "11",
           description: "Device Tampered",
-          bgcolor: "#17a2b8",
-          icon: "check-circle"
+          bgcolor: "#7ee7f7",
+          icon: <SiTampermonkey size={25}/>
         },
         {
             count: "8",
             description: "Low Battery",
-            bgcolor: "#17a2b8",
-            icon: "check-circle"
+            bgcolor: "#c78cfa",
+            icon: <BiSolidBatteryLow size={25}/>
         }
       ];
       
-    const cardView = (data,index) => {
+    const cardView = (data) => {
         return (
-            <div className="col row m-1" style={{backgroundColor:data["bgcolor"], borderRadius:"5px"}} key={index}>
-                <div className="col-sm-3 mx-0 my-auto p-1">Icon</div>
-                <div className="col-9  m-0 p-1">
-                    <p style={{fontSize:"0.7rem"}}><b>{data["description"]}</b></p>
-                    <h4><b>{data["count"]}</b></h4>
-                    <hr></hr>
-                    <div className="row">
-                        <p className="col-8" style={{fontSize:"0.7rem"}}>More Info</p>
-                        <p className="col-3" style={{fontSize:"0.7rem"}}>Click</p>
-                    </div>
+            <div className="card-widget"  style={{backgroundColor:data["bgcolor"]}}>
+              <div className="multi-card-item">
+                  <p className="card-item-desc">{data["description"]}</p>
+                  <div className="card-item-icon">{data["icon"]}</div>
+              </div>
+              <div className="card-item-count">
+                <p>{data["count"]}</p>
+                <hr></hr>
+              </div>
+                <div className="widget-card-btn-ctn">
+                    <p className="">More Info</p>
+                    <p className="">Click</p>
                 </div>
             </div>
         )
     }
 
     return(
-        <div className="row">
-            {tiles.map((item,index)=>cardView(item,index))}    
-        </div>)
+        <div className="multi-card-container">
+            {tiles.map(item=>cardView(item))}    
+        </div>
+        )
 }

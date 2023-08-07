@@ -20,10 +20,12 @@ export const DistributorList = () => {
 
 
     return(
-        <div className="w-90 mx-auto mt-5">
-            <p><b>Distributors List</b></p>
+        <>
+        <p className="table-listp">Distributors List</p>
+        <div className="table-list">
             <DynamicTable data={distributors} sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}/>
         </div>
+        </>
     )
 }
 

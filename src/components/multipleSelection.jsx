@@ -26,11 +26,11 @@ export const MultipleSelection = ({data, updateList}) => {
     }
 
     return <div>
-    {uiList.map(item=><div key = {item["code"]} className={"row m-1 justify-content-between align-items-center " + (item["isActive"] ? "bg-warning" : "bg-light")} onClick={()=>onSelection(item)}>
-                        <p className="px-4 py-2 col-11 m-0">
+    {uiList.map(item=><div key = {item["code"]} className={"" + (item["isActive"] ? "bg-warning" : "bg-light")} onClick={()=>onSelection(item)}>
+                        <p className="">
                             {item["text"]}
                         </p>
-                        {item["isActive"] ? <GrRadialSelected className="col-1 m-0"/> : null }
+                        {item["isActive"] ? <GrRadialSelected className=""/> : null }
                         </div>
         )}
 </div>

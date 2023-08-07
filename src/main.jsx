@@ -3,9 +3,12 @@ import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
 
+import { UserProvider } from './context/userContext.jsx';
+
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import { Masters } from './screens/masters/masters.jsx';
 import { DashBoard } from './screens/dashboard/dashBoard.jsx';
+import { Reports } from './screens/reports/reports.jsx';
 import { RTO } from './screens/rto/rto.jsx';
 import { RTOList } from './screens/rto/rtoList.jsx';
 import { AddRTO } from './screens/rto/rtoAdd.jsx';
@@ -30,8 +33,14 @@ import { AddApprovingAuthority } from './screens/masters/addApprovingAuthority.j
 import { ApprovingAuthorityList } from './screens/masters/listApprovingAuthority.jsx';
 import { DeviceInventory } from './screens/deviceInventory/deviceInventory.jsx';
 import { AddDeviceInventory } from './screens/deviceInventory/addDeviceInventory.jsx';
-import PrivateRoute from './components/PrivateRoute.js';
+import { Provider } from "react-redux";
+import rootReducer from "./reducer/index.js";
+import {configureStore} from "@reduxjs/toolkit"
 
+
+const store = configureStore({
+  reducer:rootReducer,
+});
 const router = createBrowserRouter([
   {
     path: "/",
@@ -43,23 +52,28 @@ const router = createBrowserRouter([
       },
       {
         path: "",
-        element: <LoginScreen />,
+        element: <DashBoard />,
       },
       {
         path: "dashboard",
-        element: <PrivateRoute><DashBoard /></PrivateRoute>,
+        element: <DashBoard />,
+      },
+      {
+        path: "reports",
+        element: <Reports />,
       },
       {
         path: "rtos",  
-        element: <PrivateRoute><RTO /></PrivateRoute>,
+        element: <RTO />,
         children:[
+          {path: "", element: <RTOList />},
           {path: "addRTO", element: <AddRTO />},
           {path: "listRTO", element: <RTOList />}
         ]
       },
       {
         path: "manufacturers",   
-        element: <PrivateRoute><Manufacturer /></PrivateRoute>,
+        element: <Manufacturer />,
         children:[
           {path: "listManufacturer", element: <ManufacturerList />},
           {path: "addManufacturer", element: <AddManufacturer />},
@@ -67,7 +81,7 @@ const router = createBrowserRouter([
       },
       {
         path: "distributors",  
-        element: <PrivateRoute><Distributor /></PrivateRoute>,
+        element: <Distributor />,
         children:[
           {path: "listDistributor", element: <DistributorList />},
           {path: "addDistributor", element: <AddDistributor />},
@@ -75,7 +89,7 @@ const router = createBrowserRouter([
       },
       {
         path: "userManagement",  
-        element: <PrivateRoute><User /></PrivateRoute>,
+        element: <User />,
         children:[
           {path: "listUser", element: <UserList />},
           {path: "addUser", element: <AddUser />},
@@ -83,7 +97,7 @@ const router = createBrowserRouter([
       },
       {
         path: "deviceApproval",  
-        element: <PrivateRoute><DeviceApproval /></PrivateRoute>,
+        element: <DeviceApproval />,
         children:[
           {path: "listDeviceApproval", element: <DeviceApprovalList />},
           {path: "addDeviceApproval", element: <AddDeviceApproval />},
@@ -91,7 +105,7 @@ const router = createBrowserRouter([
       },
       {
         path: "deviceInventory",  
-        element: <PrivateRoute><DeviceInventory /></PrivateRoute>,
+        element: <DeviceInventory />,
         children:[
           {path: "deviceInventoryList", element: <ESIMProviderList />},
           {path: "addDeviceInventory", element: <AddDeviceInventory />},
@@ -100,7 +114,7 @@ const router = createBrowserRouter([
       },
       {
         path: "masters",  
-        element: <PrivateRoute><Masters /></PrivateRoute>,
+        element: <Masters />,
         children:[
           {path: "listESIMProviders", element: <ESIMProviderList />},
           {path: "addESIMProviders", element: <AddESIMProviders />},
@@ -116,6 +130,10 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-      <RouterProvider router={router} />
+    <Provider store = {store}>
+      <UserProvider>
+        <RouterProvider router={router} />
+      </UserProvider>
+    </Provider>
   </React.StrictMode>,
 )

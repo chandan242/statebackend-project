@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { MultipleSelection } from "../../components/multipleSelection";
 import { UserPermissions } from "../../constants/permissions";
 import { addUserAPI } from "../../apis/users";
+import { LoadingWidget } from "../../components/loading";
 
 export const AddUser = (props) => {
 
@@ -41,38 +42,42 @@ export const AddUser = (props) => {
         const response = await addUserAPI(uploadData)
         console.log(response, "user created")
         setIsLoading(false)
-    
     }
 
     const formFieldUI = (label, name, type) => {
-        return (<div key = {name} className="form-group col">
-                    <label className="form-label m-0">{label}</label>
-                    <input required className="form-control" name={name} type={type} onChange={e=>onChange(e)}></input>
+        return (<div key = {name} className="form-groups">
+                    <label className="form-labels">{label}</label>
+                    <input required className="form-inputs" name={name} type={type} onChange={e=>onChange(e)}></input>
                 </div>)
     }
 
     return (
-        <div  className="w-75 mx-auto mt-5">  
-            <form className = "m-2">
-                <p><b>User identifiers</b></p>
-                <div className="row">
-                    {formFieldUI("Designation", "designation", "text")}
-                    {formFieldUI("User Name", "userName", "text")}
-                    {formFieldUI("Email ID", "emailId", "text")}
+        <>
+        <p className="form-heading-para">USER ADD</p><hr />
+        <div  className="form-container">  
+            {isLoading ? <LoadingWidget /> : <form>
+                <div className = "form-tag">
+                    <p className="form-identifire-para">User identifiers</p>
+                    <div className="form-rows">
+                        {formFieldUI("Designation", "designation", "text")}
+                        {formFieldUI("User Name", "userName", "text")}
+                        {formFieldUI("Email ID", "emailId", "text")}
+                    </div>
+                    <div className="form-rows">
+                        {formFieldUI("Password", "password", "text")}
+                        {formFieldUI("Confirm Password", "confirmPassword", "text")}
+                    </div>
+                    <p className="form-identifire-para">Map Roles</p>
+                    <div className="form-rows">
+                        <MultipleSelection data = {filteredPermissions} updateList= {setSelectedPermissions}/>
+                    </div>
                 </div>
-                <div className="row">
-                    {formFieldUI("Password", "password", "text")}
-                    {formFieldUI("Confirm Password", "confirmPassword", "text")}
+                <div className="form-submit-btn">
+                    <button className="btn btn-primary" onClick={e=>handleSubmit(e)}>Save</button>
                 </div>
-                <p><b>Map Roles</b></p>
-                
-                <div>
-                    <MultipleSelection data = {filteredPermissions} updateList= {setSelectedPermissions}/>
-                </div>
-                   
-                <button className="btn btn-primary" onClick={e=>handleSubmit(e)}>Save</button>
-            </form>
+            </form>}
         </div>
+        </>
     )
 }
 

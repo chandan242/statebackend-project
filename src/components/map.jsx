@@ -5,7 +5,8 @@ export const MAPLayout = () => {
     const mapRef = useRef(null);
 
     const [mapplsClassObject, setMapplsClassObject] = useState(null)
-    const  styleMap  = {width:  '100%', height:  '95%', display:'inline-block', padding:'0', margin:'0'};
+    const  styleMap  = {width:  '100%', height:  '100%', display:'inline-block', padding:'0', margin:'0'};
+
 
     useEffect(()=>{
         if(mapplsClassObject === null){
@@ -24,5 +25,6 @@ export const MAPLayout = () => {
         }
     },[mapplsClassObject,])
 
-    return <div id="map" style={styleMap} ref={mapRef}></div>
+
+    return <div id="map"  style={styleMap} ref={mapRef}></div>
 }

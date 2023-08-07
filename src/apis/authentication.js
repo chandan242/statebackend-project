@@ -1,12 +1,13 @@
 import {BaseURL} from '../constants/baseURL'
 
-export const login = async (data) => {
+export const login = async (username,password) => {
+
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            username: data["username"],
-            password: data["password"],
+            username: username,
+            password: password,
         }),
     };
     const response = await fetch(`${BaseURL}/UserRoles/userlogin`, requestOptions)
@@ -16,17 +17,13 @@ export const login = async (data) => {
     localStorage.setItem('id', (responseParsed.loginResp.id))
     localStorage.setItem("userObject", JSON.stringify(responseParsed));
 
-    console.log("localstorage", localStorage.getItem("userObject"))
-
     window.location = '/dashboard';       
-
     return responseParsed
 }
 
-
-export function logout() {
-    localStorage.removeItem("token")
-    localStorage.removeItem("userObject")
-    localStorage.removeItem("id")
-    window.location = '/login';
-  }
+export const logout = async () => {
+    localStorage.setItem('token', "")
+    localStorage.setItem('id', "")
+    localStorage.setItem("userObject", "");
+    window.location = '/';       
+}

@@ -1,19 +1,53 @@
 /* Hide scrollbar for Chrome, Safari and Opera */
 .scroll_table::-webkit-scrollbar {
-  size: 2px;
+  display: none;
 }
   
 /* Hide scrollbar for IE, Edge and Firefox */
 .scroll_table {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;  
+  scrollbar-width: none; 
+
 }
 
 table th, table td{
   white-space: nowrap !important;
 }
+.table-striped {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+  /* margin:0 20px 20px 20px; */
+}
 
+.table-striped td, .table-striped th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.table-striped tr:nth-child(even){background-color: #f2f2f2;}
+
+/* .table-striped tr:hover {background-color: #ddd;} */
+
+.table-striped th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+
+.loader-container{
+  width: 100vw;
+  height: 100vh;
+  border: 1px solid;
+  /* background-color: black; */
+  position: relative;
+}
 .loader {
+  position: absolute;
+  top: 40vh;
+  left: 48vw;
   border: 10px solid #f3f3f3;
   border-top: 10px solid #3498db;
   border-radius: 50%;
@@ -21,12 +55,31 @@ table th, table td{
   height: 80px;
   animation: spin 1s linear infinite;
 }
-
+@media screen and (max-width: 600px) {
+.loader {
+  position: absolute;
+  top: 40vh;
+  left: 35vw;
+}
+}
 @keyframes spin {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
+    
   }
 } 
+
+.table-list{
+  margin-left: 20px;
+  margin-right: 20px;
+  margin: 0px 20px 20px 20px;
+  overflow-x:auto;
+}
+.table-listp{
+  text-align: center;
+  font-size: 20px;
+  color: rgb(56, 55, 55);
+}

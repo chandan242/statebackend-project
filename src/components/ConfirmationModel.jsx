@@ -1,5 +1,5 @@
-import IconBtn from "./IconBtn"
-
+// import IconBtn from "./IconBtn"
+import { useState } from "react"
 export default function ConfirmationModal({ modalData }) {
   return (
     <div className="confirmation-model-box">
@@ -11,10 +11,13 @@ export default function ConfirmationModal({ modalData }) {
           {modalData?.text2}
         </p>
         <div className="confirmation-items-iconbtn">
-          <IconBtn
+          {/* <IconBtn
             onclick={modalData?.btn1Handler}
             text={modalData?.btn1Text}
-          />
+          /> */}
+          <button onClick={modalData?.btn1Handler} className='iconbtn'>
+            Logout
+          </button>
           <button
             className="confirmation-items-btn"
             onClick={modalData?.btn2Handler}

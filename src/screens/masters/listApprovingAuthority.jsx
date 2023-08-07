@@ -20,10 +20,12 @@ export const ApprovingAuthorityList = () => {
 
 
     return(
-        <div className="w-90 mx-auto mt-5">
-            <p><b>Device Approving Authorities</b></p>
+        <>
+        <p className="table-listp">Device Approving Authorities</p>
+        <div className="table-list">
             <DynamicTable data={approvingAuthority} sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}/>
         </div>
+        </>
     )
 }
 
