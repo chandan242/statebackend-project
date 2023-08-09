@@ -9,8 +9,11 @@ export const AddUser = (props) => {
 
     const entityType = props.entityType || "DST"
     
-    const filteredPermissions = UserPermissions.filter(item=>item["users"].includes(entityType))    
+    // const filteredPermissions = UserPermissions.filter(item=>item["users"].includes(entityType))    
 
+    const filteredPermissions = UserPermissions.filter((item) =>
+      item.users.includes(entityType)
+    );
     // const [data, setData] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [selectedPermissions, setSelectedPermissions] = useState([]) 
@@ -89,9 +92,9 @@ export const AddUser = (props) => {
         
     }
 
-    const formFieldUI = (label, name, type) => {
+    const formFieldUI = (label, name, type, star) => {
         return (<div key = {name} className="form-groups">
-                    <label className="form-labels">{label}</label>
+                    <label className="form-labels">{label}<sup>{star}</sup></label>
                     <input required className="form-inputs" name={name} type={type} onChange={e=>onChange(e)}></input>
                     {errors[name] && <div className="error-message" style={{color:"red",fontSize:"13px"}}>{errors[name]}</div>}
                 </div>)
@@ -99,19 +102,19 @@ export const AddUser = (props) => {
 
     return (
         <>
-        <p className="form-heading-para">USER ADD</p><hr />
+        <p className="form-heading-para">USER ADD</p>
         <div  className="form-container">  
             {isLoading ? <LoadingWidget /> : <form>
                 <div className = "form-tag">
                     <p className="form-identifire-para">User identifiers</p>
                     <div className="form-rows">
-                        {formFieldUI("Designation", "designation", "text")}
-                        {formFieldUI("User Name", "userName", "text")}
-                        {formFieldUI("Email ID", "emailId", "text")}
+                        {formFieldUI("Designation", "designation", "text","*")}
+                        {formFieldUI("User Name", "userName", "text","*")}
+                        {formFieldUI("Email ID", "emailId", "text","*")}
                     </div>
                     <div className="form-rows">
-                        {formFieldUI("Password", "password", "text")}
-                        {formFieldUI("Confirm Password", "confirmPassword", "text")}
+                        {formFieldUI("Password", "password", "text","*")}
+                        {formFieldUI("Confirm Password", "confirmPassword", "text","*")}
                     </div>
                     <p className="form-identifire-para">Map Roles</p>
                     <div className="form-rows">

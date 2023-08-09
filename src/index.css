@@ -5,7 +5,7 @@ body {
   box-sizing: border-box;
   min-height: 100vh;
   font-family: 'Roboto';font-size: 16px;
-  /* background-color: rgb(245, 243, 243); */
+  background-color: rgb(245, 243, 243);
 }
 @media (max-width: 767px) {
   body {
@@ -20,7 +20,9 @@ body {
 /* sun-nav common css */
 
 .sub-nav{
-  background-image:linear-gradient(#336a80, #4c849a, #336a80);
+  /* background-image:linear-gradient(rgb(20, 64, 133), rgb(66, 118, 202), rgb(20, 64, 133)); */
+  /* background-image:linear-gradient(#336a80, #4c849a, #336a80); */
+  background-color: rgb(20, 64, 133);
   opacity: low;
   padding: 8px;
 }
@@ -41,16 +43,17 @@ body {
 .sub-nav-text{
   text-decoration: none;
   color: rgb(255, 255, 255);
-  padding: 8px 15px;
+  padding: 10px 15px;
 }
 .sub-nav-text-active{
   text-decoration: none;
-  color: rgb(0, 0, 0);
-  background-color: white;
+  color: white;
+  /* color: rgb(0, 0, 0); */
+  /* background-color: white; */
   list-style: none;
-  padding: 8px 15px;
-  border-radius: 6px;
-  border: 1px solid white;
+  padding: 10px 15px;
+  /* border-radius: 6px; */
+  border-bottom: 4px solid white;
 }
 
 @media only screen and (max-width : 1100px) {
@@ -172,7 +175,7 @@ body {
 .sidebar-item{
   padding: 10px;
   margin: 0;
-  background-color: rgb(20, 64, 133);
+  background-color: rgb(13, 58, 132);
   width: 220px;
 }
 .container-item-shrink{
@@ -276,7 +279,8 @@ body {
   padding: 9px 30px;
   border-radius: 8px;
   color: white;
-  background-color: #016e82;
+  background-color: rgb(27, 85, 177);
+  /* background-image:linear-gradient(rgb(20, 64, 133), rgb(66, 118, 202), rgb(20, 64, 133)); */
   cursor: pointer;
   width: 99%;
   font-size: 16px;

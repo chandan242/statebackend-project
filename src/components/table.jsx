@@ -15,7 +15,7 @@ export const DynamicTable = (params)=>{
 
     useEffect(()=>{
         setFilteredArray([])
-        if(data_table.length > 20){
+        if(data_table.length > 10){
             setFilteredArray(data_table.slice(0+pageCount*20,20+pageCount*20))
             setPageMoverRequired(true)
         } else {

@@ -25,8 +25,6 @@ export const  UserProvider = ({ children }) => {
     localStorage.removeItem("userObject")
   }
 
-  
-
   return (
     <UserContext.Provider value={userDetails}>
         <setUserContext.Provider value={{setUserDetails, logOutUser}}>

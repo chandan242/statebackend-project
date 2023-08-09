@@ -27,7 +27,7 @@ export const MultipleSelection = ({data, updateList}) => {
 
     return <div>
     {uiList.map(item=><div key = {item["code"]} className={"" + (item["isActive"] ? "bg-warning" : "bg-light")} onClick={()=>onSelection(item)}>
-                        <p className="">
+                        <p className="map-roles-text">
                             {item["text"]}
                         </p>
                         {item["isActive"] ? <GrRadialSelected className=""/> : null }

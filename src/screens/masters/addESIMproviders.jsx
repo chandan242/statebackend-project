@@ -3,6 +3,7 @@ import { addentity } from "../../apis/entities";
 import { LoadingWidget } from "../../components/loading";
 import { uploadDoc } from "../../apis/uploadFiles";
 import useFormValidation from "../../constants/Validation";
+import usePincodeFetch from "../../constants/usePincodeFetch";
 
 export const AddESIMProviders = () => {
 
@@ -77,6 +78,16 @@ export const AddESIMProviders = () => {
         validationRules
       );
 
+      const { districtOptions, stateOptions, pincodeLoading, pincodeError, fetchPincodeData } =
+      usePincodeFetch();
+  
+    const handlePincodeChange = async (e) => {
+      const pincode = e.target.value;
+      const { district, state } = await fetchPincodeData(pincode);
+      onChange({ target: { name: 'district', value: district } });
+      onChange({ target: { name: 'state', value: state } });
+    };
+
     const handleFileUpload = async (e) => {
         const response = await uploadDoc(e.target.files[0])
         console.log("upload file response", response)
@@ -102,7 +113,7 @@ export const AddESIMProviders = () => {
     const formFieldUI = (label, name, type,star) => {
         return (<div key = {name} className="form-groups">
                     <label className="form-labels">{label}<sup>{star}</sup></label>
-                    <input required className="form-inputs" name={name} type={type} onChange={e=>onChange(e)}></input>
+                    <input required className="form-inputs" name={name} type={type} value={data[name]} onChange={e=>onChange(e)} onKeyUp={name === "pincode" ? handlePincodeChange : undefined}></input>
                     {errors[name] && <div className="error-message" style={{color:"red",fontSize:"13px"}}>{errors[name]}</div>}
                 </div>)
     }
@@ -130,11 +141,11 @@ export const AddESIMProviders = () => {
                     <p className="form-identifire-para">Address Details</p>
                     <div className="form-rows">
                         {formFieldUI("Address", "address", "text")}
-                        {formFieldUI("District", "district", "text","*")}
+                        {formFieldUI("Pin Code", "pincode", "text","*")}
                     </div>
                     <div className="form-rows">
+                        {formFieldUI("District", "district", "text","*")}
                         {formFieldUI("State", "state", "text","*")}
-                        {formFieldUI("Pin Code", "pincode", "text","*")}
                     </div>
                     <p className="form-identifire-para">Contact details</p>
                     <div className="form-rows">

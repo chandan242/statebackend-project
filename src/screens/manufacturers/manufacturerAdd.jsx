@@ -3,6 +3,7 @@ import { addentity } from "../../apis/entities";
 import { AddUser } from "../userManagement/userAdd";
 import { LoadingWidget } from "../../components/loading";
 import useFormValidation from "../../constants/Validation";
+import usePincodeFetch from "../../constants/usePincodeFetch";
 
 export const AddManufacturer = () => {
 
@@ -10,11 +11,15 @@ export const AddManufacturer = () => {
     const [isLoading, setIsLoading] = useState(false)
     const [userAddition, setUserAddition] = useState(false)
 
-    // const onChange = (e) => {
-    //     const data_new = {...data}
-    //     data_new[e.target.name] = e.target.value
-    //     setData(data_new)
-    // }
+    const { districtOptions, stateOptions, pincodeLoading, pincodeError, fetchPincodeData } =
+    usePincodeFetch();
+
+    const handlePincodeChange = async (e) => {
+      const pincode = e.target.value;
+      const { district, state } = await fetchPincodeData(pincode);
+      onChange({ target: { name: 'district', value: district } });
+      onChange({ target: { name: 'state', value: state } });
+    };
 
     const handleFileUpload = async (e) => {
         const response = await uploadDoc(e.target.files[0])
@@ -49,18 +54,18 @@ export const AddManufacturer = () => {
         kycgstpan: {
           required: true,
         },
-        // address: {
-        //   required: true,
-        // },
-        // district: {
-        //   required: true,
-        // },
-        // state: {
-        //   required: true,
-        // },
-        // pincode: {
-        //   required: true,
-        // },
+        address: {
+          required: true,
+        },
+        district: {
+          required: true,
+        },
+        state: {
+          required: true,
+        },
+        pincode: {
+          required: true,
+        },
         contactName: {
           required: true,
         },
@@ -70,12 +75,12 @@ export const AddManufacturer = () => {
         contactNo: {
           required: true,
         },
-        registrationForm:{
-            required : true
-        },
-        kycDocuments:{
-            required : true
-        }
+        // registrationForm:{
+        //     required : true
+        // },
+        // kycDocuments:{
+        //     required : true
+        // }
       };
   
       const { data, errors,setErrors, onChange, validateForm } = useFormValidation(
@@ -100,17 +105,17 @@ export const AddManufacturer = () => {
         }
     }
 
-    const formFieldUI = (label, name, type) => {
+    const formFieldUI = (label, name, type, star) => {
         return (<div key = {name} className="form-groups">
-                    <label className="form-labels">{label}</label>
-                    <input required className="form-inputs" name={name} type={type} onChange={e=>onChange(e)}></input>
+                    <label className="form-labels">{label}<sup>{star}</sup></label>
+                    <input required className="form-inputs" name={name} type={type}  value={data[name]} onChange={e=>onChange(e)} onKeyUp={name === "pincode" ? handlePincodeChange : undefined}></input>
                     {errors[name] && <div className="error-message" style={{color:"red",fontSize:"13px"}}>{errors[name]}</div>}
                 </div>)
     }
 
-    const fileUploadUI = (label, name, type) => {
+    const fileUploadUI = (label, name, type,star) => {
         return (<div key = {name} className="form-groups">
-                    <label className="form-labes">{label}</label>
+                    <label className="form-labes">{label}<sup>{star}</sup></label>
                     <input required className="form-inputs" name={name} type={type} onChange={e=>handleFileUpload(e)}></input>
                     {errors[name] && <div className="error-message" style={{color:"red",fontSize:"13px"}}>{errors[name]}</div>}
                 </div>)
@@ -125,24 +130,24 @@ export const AddManufacturer = () => {
                 <div className = "form-tag">
                     <p className="form-identifire-para">Manufacturer identifiers</p>
                     <div className="form-rows">
-                        {formFieldUI("Manufacturer Code", "entityCode", "text")}
-                        {formFieldUI("Manufacturer Name", "entityName", "text")}
-                        {formFieldUI("KYC Identifier", "kycgstpan", "text")}
+                        {formFieldUI("Manufacturer Code", "entityCode", "text","*")}
+                        {formFieldUI("Manufacturer Name", "entityName", "text","*")}
+                        {formFieldUI("KYC Identifier", "kycgstpan", "text","*")}
                     </div>
                     <p className="form-identifire-para">Address Details</p>
                     <div className="form-rows">
-                        {formFieldUI("Address", "address", "text")}
-                        {formFieldUI("District", "district", "text")}
+                        {formFieldUI("Address", "address", "text","*")}
+                        {formFieldUI("Pin Code", "pincode", "text","*")}
                     </div>
                     <div className="form-rows">
-                        {formFieldUI("State", "state", "text")}
-                        {formFieldUI("Pin Code", "pincode", "text")}
+                        {formFieldUI("District", "district", "text","*")}
+                        {formFieldUI("State", "state", "text","*")}
                     </div>
                     <p className="form-identifire-para">Contact details</p>
                     <div className="form-rows">
-                        {formFieldUI("Admin Name", "contactName", "text")}
-                        {formFieldUI("Email", "emailId", "text")}
-                        {formFieldUI("Contact", "contactNo", "text")}      
+                        {formFieldUI("Admin Name", "contactName", "text","*")}
+                        {formFieldUI("Email", "emailId", "text","*")}
+                        {formFieldUI("Contact", "contactNo", "text","*")}      
                     </div>
                     <p className="form-identifire-para">Documents Upload</p>
                     <div className="form-rows">
