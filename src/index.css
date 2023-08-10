@@ -178,6 +178,12 @@ body {
   background-color: rgb(13, 58, 132);
   width: 220px;
 }
+.sidebar-item-shrink{
+  width: 45px;
+  padding: 10px;
+  margin: 0;
+  background-color: rgb(13, 58, 132);
+}
 .container-item-shrink{
   width: calc(100vw - 220px);
 }
@@ -282,7 +288,7 @@ body {
   background-color: rgb(27, 85, 177);
   /* background-image:linear-gradient(rgb(20, 64, 133), rgb(66, 118, 202), rgb(20, 64, 133)); */
   cursor: pointer;
-  width: 99%;
+  width: 13%;
   font-size: 16px;
 }
 .form-submit-btn button:hover{
@@ -884,3 +890,4 @@ sup{
     margin-top: 3rem;
   }
 }
+

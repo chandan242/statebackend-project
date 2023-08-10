@@ -75,6 +75,7 @@ export const AddRTO = () => {
     onChange({ target: { name: 'state', value: state } });
   };
 
+  // handle submit function
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
