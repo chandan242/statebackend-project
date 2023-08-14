@@ -4,45 +4,47 @@ import {VscDebugBreakpointUnsupported} from "react-icons/vsc";
 import { FaStackOverflow } from "react-icons/fa";
 import { BiSolidBatteryLow } from "react-icons/bi";
 import {SiTampermonkey} from "react-icons/si";
+import { useSelector } from "react-redux";
 
 export const MultiCardWidgets = () => {
+  let { navigationOpen } = useSelector((state) => state.common);
 
     const tiles = [
         {
           count: "2262",
           description: "Rash Turning",
-          bgcolor: "#a7a8a8",
-          icon: <GiReturnArrow  size={45}/>
+          // bgcolor: "#7b808a",
+          icon: <GiReturnArrow  size={50} fill="#424242"/>
         },
         {
           count: "10",
           description: "Over Speed",
-          bgcolor: "#f5717d",
-          icon: <MdSpeed size={45}/>
+          // bgcolor: "#d16262",
+          icon: <MdSpeed size={50} fill="red"/>
         },
         {
           count: "69",
           description: "Harsh Breaking",
-          bgcolor: "#8df2a4",
-          icon: <VscDebugBreakpointUnsupported size={57}/>
+          // bgcolor: "#62d19f",
+          icon: <VscDebugBreakpointUnsupported size={63} fill="green"/>
         },
         {
           count: "86",
           description: "Harsh Acceleration",
-          bgcolor: "#f0a667",
-          icon: <FaStackOverflow size={45}/>
+          // bgcolor: "#f0a667",
+          icon: <FaStackOverflow size={50} fill="#ab9505"/>
         },
         {
           count: "11",
           description: "Device Tampered",
-          bgcolor: "#7ee7f7",
-          icon: <SiTampermonkey size={43}/>
+          // bgcolor: "#41d6e0",
+          icon: <SiTampermonkey size={50} fill="#07827a"/>
         },
         {
             count: "8",
             description: "Low Battery",
-            bgcolor: "#c78cfa",
-            icon: <BiSolidBatteryLow size={45}/>
+            // bgcolor: "#c78cfa",
+            icon: <BiSolidBatteryLow size={50} fill="red"/>
         }
       ];
       
@@ -55,18 +57,18 @@ export const MultiCardWidgets = () => {
               </div>
               <div className="card-item-count">
                 <p>{data["count"]}</p>
-                <hr></hr>
+                <hr style={{height:"2px",backgroundColor:"grey"}}></hr>
               </div>
                 <div className="widget-card-btn-ctn">
                     <p className="">More Info</p>
-                    <p className="">Click</p>
+                    <p className="widgrt-card-click">Click</p>
                 </div>
             </div>
         )
     }
 
     return(
-        <div className="multi-card-container">
+        <div className={navigationOpen?"multi-card-container":"multi-card-container-expand"}>
             {tiles.map(item=>cardView(item))}    
         </div>
         )

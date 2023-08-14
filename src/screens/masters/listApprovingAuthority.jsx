@@ -37,7 +37,11 @@ export const ApprovingAuthorityList = () => {
                 </div>
             </div>
         <div className="table-list">
-            <DynamicTable data={approvingAuthority} sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}/>
+            <DynamicTable 
+                data={approvingAuthority} 
+                sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}
+                
+            />
         </div>
         </div>
     )

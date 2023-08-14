@@ -1,13 +1,8 @@
 import {useState, useEffect} from "react"
-import { Link } from "react-router-dom"
 import { getEntitiesByType } from "../../apis/entities"
 import {DynamicTable} from "../../components/table"
-import downloadExcel from '../../helpers/excel'
 import { generatePDF } from "../../helpers/pdf"
-import {AiOutlineFilePdf} from 'react-icons/ai'
-import {SiMicrosoftexcel} from 'react-icons/si'
 import DetailModal from "../../components/DetailModal"
-
 
 export const RTOList = () => {
 
@@ -64,19 +59,23 @@ export const RTOList = () => {
         <div>
             <div className="table-header-section">
                 <p className="table-listp">RTO LIST</p>
-                <div className="download-btn-container">
+                {/* <div className="download-btn-container">
                     <button onClick={()=>downloadExcel(rtos,'imp')} style={{display:"flex",gap:"10px",alignItems:"center"}}>Download as <SiMicrosoftexcel/></button>
                     <button onClick={handlePDFDownload} style={{display:"flex",gap:"10px",alignItems:"center"}}>Download as <AiOutlineFilePdf/></button>
-                </div>
+                </div> */}
             </div>
             <div className="table-list">
                 <DynamicTable
                     data={filteredRTOs}
-                    onDetailClick={handleModalOpen}
                     sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}
+                    datas={rtos}
+                    onDetailClick={handleModalOpen}
                     filter_required={true}
                     onSearchChange={handleSearchChange}
                     searchField={searchField}
+                    isPdfDownloadBtnVisible={true}
+                    isExcelDownloadBtnVisible={true}
+                    onPDFDownload={handlePDFDownload}  
                 />
                 <DetailModal isOpen={isModalOpen} onClose={handleModalClose} data={selectedRTO} />
 

@@ -2,12 +2,26 @@ import {useState, useEffect} from "react"
 import { Link } from "react-router-dom"
 import { getEntitiesByType } from "../../apis/entities"
 import {DynamicTable} from "../../components/table"
-import downloadExcel from '../../helpers/excel'
 import { generatePDF } from "../../helpers/pdf"
+import DetailModal from "../../components/DetailModal"
 
 export const DistributorList = () => {
 
     const [distributors, setDistributorss] = useState([])
+    const [selectedRTO, setSelectedRTO] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [searchField, setSearchField] = useState("");
+
+    // Modal open and close function 
+    const handleModalOpen = (rto) => {
+        setSelectedRTO(rto);
+        setIsModalOpen(true);
+        };
+    
+        const handleModalClose = () => {
+        setSelectedRTO(null);
+        setIsModalOpen(false);
+        };setSelectedRTO
 
     useEffect(()=>{
         const fetchData = async () => {
@@ -27,18 +41,44 @@ export const DistributorList = () => {
         generatePDF(headers, data,"Distributors List");
     };
 
+    // write a function to search table list data
+    const handleSearchChange = (value) => {
+        setSearchField(value);
+    };
+    const filteredDistributors = searchField
+    ? distributors.filter((distribut) =>
+        distribut.entityName.includes(searchField) ||
+        distribut.entityCode.includes(searchField) ||
+        distribut.address.includes(searchField) ||
+        distribut.contactName.includes(searchField) ||
+        distribut.contactNo.includes(searchField)
+        )
+    : distributors;
+
 
     return(
         <div>
             <div className="table-header-section">
             <p className="table-listp">Distributors List</p>
-                <div className="download-btn-container">
+                {/* <div className="download-btn-container">
                     <button onClick={()=>downloadExcel(distributors,'imp')}>Download as Ms Excel</button>
                     <button onClick={handlePDFDownload}>Download as PDF</button>
-                </div>
+                </div> */}
             </div>
         <div className="table-list">
-            <DynamicTable data={distributors} sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}/>
+        <DynamicTable 
+            datas={distributors}
+            data={filteredDistributors}
+            onDetailClick={handleModalOpen}
+            sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}
+            filter_required={true}
+            onSearchChange={handleSearchChange}
+            searchField={searchField}
+            isPdfDownloadBtnVisible={true}
+            isExcelDownloadBtnVisible={true}
+            onPDFDownload={handlePDFDownload}  
+        />
+        <DetailModal isOpen={isModalOpen} onClose={handleModalClose} data={selectedRTO} />
         </div>
         </div>
     )

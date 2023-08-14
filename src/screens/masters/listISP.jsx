@@ -37,7 +37,10 @@ export const ISPList = () => {
                 </div>
             </div>
         <div className="table-list">
-            <DynamicTable data={isp} sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}/>
+            <DynamicTable 
+                data={isp}
+                sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}
+            />
         </div>
         </div>
     )

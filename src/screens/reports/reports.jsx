@@ -7,7 +7,6 @@ export const Reports = () => {
     return (
             <>
             <h1 className="h1">Reports</h1><hr/>
-            <PincodeForm/>
             <div className="reports">
                 <div className="report-bar-container">
                     <div>

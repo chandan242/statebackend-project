@@ -32,12 +32,15 @@ function App() {
       
       <div className='containers'>
         <div className="sidebar">
-          {navigationOpen ? <div className="sidebar-item">
+          {/* {navigationOpen ? <div className="sidebar-item">
             <Sidebar/>
-          </div>: null}
+          </div>: null} */}
+          {navigationOpen 
+          ? (<div className="sidebar-item"><Sidebar navigationOpen={navigationOpen}/></div>) 
+          : (<div className="sidebar-item-shrink"><Sidebar navigationOpen={navigationOpen}/></div>) }
             
           <div id="detail" className={(navigationOpen ? "container-item-shrink" : "container-item-expand")} >
-            <Outlet/>
+            <Outlet navigationOpen={navigationOpen}/>
           </div>
         </div>
       </div> 

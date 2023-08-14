@@ -177,18 +177,22 @@ body {
   margin: 0;
   background-color: rgb(13, 58, 132);
   width: 220px;
+  white-space: nowrap;
+  /* padding-top: 1rem; */
 }
 .sidebar-item-shrink{
   width: 45px;
   padding: 10px;
   margin: 0;
   background-color: rgb(13, 58, 132);
+  white-space: nowrap;
+  /* padding-top: 3rem; */
 }
 .container-item-shrink{
   width: calc(100vw - 220px);
 }
 .container-item-expand{
-  width: 100vw;
+  width: calc(100vw - 45px);
 }
 @media screen and (max-width: 600px) {
   .sidebar{
@@ -426,6 +430,41 @@ body {
   /* padding: 10px; */
   /* background-color: antiquewhite; */
 }
+.sidenav-main-logo{
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 5px;
+  /* margin-top: 5px; */
+}
+.sidenav-main-logo-expand{
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 5px;
+  /* margin-top: 5px; */
+}
+hr{
+  margin-top: 2px;
+}
+
+.sidenav-main-logo h3{
+  color: white;
+  margin: 0;
+}
+.sidenav-main-logo-expand h3{
+  visibility: hidden;
+  margin: 0;
+
+}
+.sidenav-main-logo img{
+  width: 35px;
+}
+.sidenav-main-logo-expand img{
+  width: 35px;
+}
 .sidebar-navigation-tab {
   margin: 0;
   /* background-color: rgb(255, 255, 255); */
@@ -439,6 +478,9 @@ body {
   align-items: center;
   gap: 9px;
 }
+/* Add this to your CSS stylesheet */
+
+
 /* .sidebar-navigation-active p{
 
 }
@@ -458,15 +500,19 @@ body {
   gap: 9px;
 
 }
-.sidebar-navigation-item:hover {
-
+.sidebar-navigation-item-s p{
+  display: none;
+  /* visibility: hidden; */
+}
+.sidebar-navigation-item-s p:hover{
+  opacity: 1;
+  visibility: visible;
 }
 .sidebar-navigation-item p {
   margin: 0;
   color: rgb(227, 223, 223);
   font-size: 18px;
 }
-
 
 .logout-btn p{
   /* margin-left: 10px; */
@@ -482,19 +528,29 @@ body {
   align-items: center;
   gap: 9px;
 }
+.logout-icon-expand{
+  padding: 0;
+  margin: 0;
+  margin-left: 6px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
 .logout-icon div{
   font-size: 1.4rem!important ;
   color: white;
+}
+.logout-icon-expand div{
+  font-size: 1.4rem!important ;
+  color: white;
+}
+.logout-icon-expand p{
+  visibility: hidden;
 }
 .sidenav-icon{
   font-size: 1.4rem!important ;
   color: white;
 }
-
-
-
-
-
 
 
 /* MULTI CARD ITEM CSS */
@@ -504,19 +560,28 @@ body {
   width: 300px;
   border-radius: 10px;
   margin-top: 6px;
-  background-color: rgb(241, 240, 240);
-  border: 1px solid rgb(233, 231, 231);
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(218, 218, 218);
 }
 .card-widget:hover{
   scale: 1.03;
   transition: .4s ease-in;
 }
 .multi-card-container{
+  /* width: calc(100vw - 77px); */
   display: flex;
   justify-content: space-between;
   gap: 7px;
   margin-right: 12px;
 }
+.multi-card-container-expand{
+    width: calc(100vw - 77px);
+    display: flex;
+    justify-content: space-between;
+    gap: 7px;
+    margin-right: 12px;
+}
+
 .multi-card-item{
   display: flex;
   align-items: center;
@@ -524,16 +589,29 @@ body {
   gap: 10px;
 }
 .card-item-desc{
-  font-size: 14px;
+  font-size: 15px;
+  color: rgb(44, 43, 43);
+  font-weight: 700;
 }
 .card-item-icon{
   /* margin-top: 10px; */
   color: rgb(0, 0, 0);
+  color: rgb(247, 247, 247);
   /* background-color: #d9d6d6; */
   padding: 10px;
   border-radius: 20px;
   /* background-color: white; */
   /* width: 10%; */
+}
+.widgrt-card-click{
+  padding: 3px 15px;
+  border-radius: 4px;
+  background-color: rgb(240, 240, 240);
+  cursor: pointer;
+}
+.widgrt-card-click:hover{
+  background-color: #1f4da9;
+  color: white;
 }
 .card-item-count p{
   font-size: 17px;
@@ -543,6 +621,7 @@ body {
 .widget-card-btn-ctn{
   display: flex;
   justify-content: space-between;
+  color: rgb(48, 47, 47);
 }
 @media only screen and (max-width : 850px) {
   .card-widget{
@@ -891,3 +970,11 @@ sup{
   }
 }
 
+
+
+.json-code {
+  white-space: pre-wrap;
+  font-family: monospace;
+  background-color: #f4f4f4;
+  padding: 10px;
+}

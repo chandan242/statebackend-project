@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { matchPath, useLocation } from "react-router-dom"
 import ConfirmationModal from "./ConfirmationModel";
 
-const Sidebar = () => {
+const Sidebar = ({navigationOpen}) => {
   const [confirmationModal, setConfirmationModal] = useState(null)
 
   const location = useLocation()
@@ -35,7 +35,7 @@ const Sidebar = () => {
       ]
       const navigation_tab_active = (data) => {
         return  <div className="sidebar-navigation-tab">            
-                    <Link to={data.baseRoute} className="sidebar-navigation-item">
+                    <Link to={data.baseRoute} className={navigationOpen?"sidebar-navigation-item":"sidebar-navigation-item-s"}>
                       <div className="sidenav-icon">{data.icon}</div>
                       <p>{data.label}</p>
                     </Link>
@@ -44,7 +44,7 @@ const Sidebar = () => {
 
     const navigation_tab = (data) => {
       return  <div className="sidebar-navigation-active">            
-                  <Link to={data.baseRoute+ data.default} className="sidebar-navigation-item">
+                  <Link to={data.baseRoute+ data.default} className={navigationOpen?"sidebar-navigation-item":"sidebar-navigation-item-s"}>
                     <div className="sidenav-icon">{data.icon}</div>
                     <p>{data.label}</p>
                   </Link>
@@ -53,6 +53,10 @@ const Sidebar = () => {
 
   return (
     <div className="sidebar-container">
+      <div className={navigationOpen?"sidenav-main-logo":"sidenav-main-logo-expand"}>
+        <div><img src="https://vlt.uk.gov.in/Content/image/logo4.png" alt="" /></div>
+        <h3>ADMIN</h3>
+      </div><hr />
         {
         navigation_panel.map((item,index)=>{
           return (
@@ -73,7 +77,7 @@ const Sidebar = () => {
               })
             } className="logout-btn">
         <hr />
-        <div className="logout-icon">
+        <div className={navigationOpen?"logout-icon":"logout-icon-expand"}>
           <div><BiLogOut/></div>
           <p>Logout</p>
         </div>
