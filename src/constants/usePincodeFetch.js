@@ -17,7 +17,6 @@ const usePincodeFetch = () => {
         if (data[0]?.Status === 'Success') {
           const district = data[0].PostOffice[0].District;
           const state = data[0].PostOffice[0].State;
-
           return { district, state };
         } else {
           setPincodeError('Invalid pin code');

@@ -1,40 +1,61 @@
 import { useState, useEffect, useRef } from 'react';
 import { mappls } from 'mappls-web-maps';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { setMarkers, setZoom, setCenter } from '../reducer/slice/mapSlice';
+import { fetchDataToken } from '../apis/outpostapi';
 
 export const MAPLayout = () => {
-
-    // const dispatch = useDispatch();
-    // const markers = useSelector((state) => state.map.markers);
-    // const zoom = useSelector((state) => state.map.zoom);
-    // const center = useSelector((state) => state.map.center);
+    const [latitudes, setLatitudes] = useState([]);
+    const [longitudes, setLongitudes] = useState([]);
+    const [locations, setLocations] = useState([]);
     const mapRef = useRef(null);
+    const [mapplsClassObject, setMapplsClassObject] = useState(null);
+    const styleMap = { width: '100%', height: '100%', display: 'inline-block', padding: '0', margin: '0' };
 
-    const [mapplsClassObject, setMapplsClassObject] = useState(null)
-    const  styleMap  = {width:  '100%', height:  '100%', display:'inline-block', padding:'0', margin:'0'};
+    useEffect(() => {
+        fetchDataToken()
+            .then(({ latitudes, longitudes, locations }) => {
+                setLocations(locations);
+                setLatitudes(latitudes);
+                setLongitudes(longitudes);
+            })
+            .catch(error => {
+                console.error('Error fetching location data:', error);
+            });
+    }, []);
 
-
-    useEffect(()=>{
-        if(mapplsClassObject === null){
-            const  mapProps  = { center: [28.6330, 77.2194], traffic:  false, zoom:  4, geolocation:  false, clickableIcons:  false }
-            var mapplsObject=  new  mappls();
-            setMapplsClassObject(mapplsObject)
+    useEffect(() => {
+        let mapObject = null;
+        if (mapplsClassObject === null) {
+            const mapProps = { center: [28.6330, 77.2194], traffic: false, zoom: 4, geolocation: false, clickableIcons: false };
+            var mapplsObject = new mappls();
+            setMapplsClassObject(mapplsObject);
         }
-    },[])
+        return () => {
+            if (mapObject) {
+                mapObject.destroy();
+            }
+        };
+    }, []);
 
-    useEffect(()=>{
-        if(mapplsClassObject !== null){
-            mapplsClassObject.initialize("8d4096e4ba1c3cfabb2feb542bd4782c",()=>{
-                let mapObjectdata = mapplsClassObject.Map({id:  "map"});
-                console.log("mapObjectdata", mapObjectdata)
+    useEffect(() => {
+        if (mapplsClassObject !== null && latitudes.length > 0 && longitudes.length > 0) {
+            mapplsClassObject.initialize("8d4096e4ba1c3cfabb2feb542bd4782c", () => {
+                let mapObjectdata = mapplsClassObject.Map({ id: "map" });
+
+                latitudes.forEach((lat, index) => {
+                    const lng = longitudes[index];
+                    const marker = mapplsClassObject.Marker({
+                        map: mapObjectdata,
+                        position: { lat, lng }
+                    });
+
+                    // You can customize the marker by adding additional properties here
+                });
             });
         }
-    },[mapplsClassObject,])
+    }, [ mapplsClassObject,latitudes,longitudes]);
 
-
-    return <div id="map"  style={styleMap} ref={mapRef}></div>
-}
+    return <div id="map" style={styleMap} ref={mapRef}></div>;
+};
 
 
 // import React, { useState, useEffect, useRef } from 'react';
@@ -86,3 +107,36 @@ export const MAPLayout = () => {
 
 //   return <div id="map" style={styleMap} ref={mapRef}></div>;
 // };
+
+
+
+
+
+
+
+
+
+
+
+// {
+//     "data":[
+//         {
+//             "location":{
+//                 "latitude":10,
+//                 "longitude":20
+//             }
+//         },
+//         {
+//             "location":{
+//                 "latitude":30,
+//                 "longitude":40
+//             }
+//         },
+//         {
+//             "location":{
+//                 "latitude":50,
+//                 "longitude":60
+//             }
+//         },
+//     ]
+// }
