@@ -17,14 +17,12 @@ export const DashBoard = (props) => {
         console.log("dataaaa",data);
         console.log("ACcess Tokennnnnnnnnn",data.access_token);
         setAccessToken(data.access_token);
-        // Handle the data or any other logic here
       } catch (error) {
         console.error('API error:', error);
-        // Handle errors here
       }
     }
     fetchData();
-    
+
   }, []);
   // useEffect(() => {
   //   console.log("!11111111111111111");
