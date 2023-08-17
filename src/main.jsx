@@ -36,11 +36,14 @@ import { AddDeviceInventory } from './screens/deviceInventory/addDeviceInventory
 import { Provider } from "react-redux";
 import rootReducer from "./reducer/index.js";
 import {configureStore} from "@reduxjs/toolkit"
-
+// import thunkMiddleware from 'redux-thunk';
 
 const store = configureStore({
   reducer:rootReducer,
+  // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),
 });
+
+
 const router = createBrowserRouter([
   {
     path: "/",

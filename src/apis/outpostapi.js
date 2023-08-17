@@ -27,6 +27,53 @@ const getAccessToken = async () => {
 export default getAccessToken;
 
 
+
+
+// export const getLocation = async () => {
+//   let token = localStorage.getItem("ACCESS_TOKEN_KEY");
+//   if (token) {
+//     try {
+//       console.log("111111111");
+//       var url = "https://intouch.mapmyindia.com/iot/api/devices/";
+//       console.log(`url ${url}`);
+//       const options = {
+//         mode: "cors",
+//         cache: "default",
+//         credentials: true,
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         },
+//       };
+//       console.log("222222222");
+
+//       return await fetch(`${url}`, options).then((res) => {
+//         console.log("333333333");
+//         return res;
+//       });
+
+//     } catch (err) {}
+//   } else {
+//     throw new Error("No Token Found");
+//   }
+// };
+
+
+// export const fetchDataToken = async (token) => {
+//   const API_URL = 'https://intouch.mapmyindia.com/iot/api/devices/';
+//   const access_token = localStorage.getItem("ACCESS_TOKEN_KEY")
+//   console.log("token from fetch locayion data",access_token);
+//   try {
+//     const response = await axios.get(API_URL, {
+//       headers: {
+//         Authorization: `Bearer ${access_token}`,
+//       },
+//     });
+//     return response.data;
+//   } catch (error) {
+//     throw error;
+//   }
+// };
+
 export const fetchDataToken = async (token) => {
   const API_URL = 'https://intouch.mapmyindia.com/iot/api/devices/';
   const access_token = localStorage.getItem("ACCESS_TOKEN_KEY");
@@ -48,11 +95,7 @@ export const fetchDataToken = async (token) => {
   const longitudes = locationData
     .filter(item => item.location && item.location.longitude !== undefined)
     .map(item => item.location.longitude);  
-
-    // Now you can save latitudes and longitudes to your application state or process them as needed
-    // For example, you can save them to a Redux store or a state hook in a functional component.
-
-    return { latitudes, longitudes,locations }; // Return the extracted data
+    return { latitudes, longitudes,locations };
   } catch (error) {
     throw error;
   }

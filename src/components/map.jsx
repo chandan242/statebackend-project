@@ -1,142 +1,69 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { mappls } from 'mappls-web-maps';
-import { fetchDataToken } from '../apis/outpostapi';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchMapData, refreshMapData } from '../reducer/thunk/mapDataThunk';
+// import { fetchDataToken } from '../apis/outpostapi';
 
-export const MAPLayout = () => {
-    const [latitudes, setLatitudes] = useState([]);
-    const [longitudes, setLongitudes] = useState([]);
-    const [locations, setLocations] = useState([]);
-    const mapRef = useRef(null);
-    const [mapplsClassObject, setMapplsClassObject] = useState(null);
-    const styleMap = { width: '100%', height: '100%', display: 'inline-block', padding: '0', margin: '0' };
-
+  export const MAPLayout = () => {
+    const dispatch = useDispatch();
+    const { latitudes, longitudes, locations } = useSelector((state) => state.mapData);
+  
     useEffect(() => {
-        fetchDataToken()
-            .then(({ latitudes, longitudes, locations }) => {
-                setLocations(locations);
-                setLatitudes(latitudes);
-                setLongitudes(longitudes);
-            })
-            .catch(error => {
-                console.error('Error fetching location data:', error);
+      dispatch(fetchMapData());
+      dispatch(refreshMapData());
+    }, [dispatch]);
+  
+    // const [latitudes, setLatitudes] = useState([]);
+    // const [longitudes, setLongitudes] = useState([]);
+    // const [locations, setLocations] = useState([]);
+
+    // useEffect(() => {
+    //     fetchDataToken()
+    //         .then(({ latitudes, longitudes, locations }) => {
+    //             setLocations(locations);
+    //             setLatitudes(latitudes);
+    //             setLongitudes(longitudes);
+    //         })
+    //         .catch(error => {
+    //             console.error('Error fetching location data:', error);
+    //         });
+    // }, []);
+
+  const  styleMap  = {width:  '100%', height:  '100vh', display:'inline-block'}
+  const  mapProps  = { center: [28.6330, 77.2194], traffic:  false, zoom:  4, geolocation:  false, clickableIcons:  false }
+  var mapObject ;
+  var mapplsClassObject=  new  mappls();
+  
+      mapplsClassObject.initialize("8d4096e4ba1c3cfabb2feb542bd4782c",()=>{
+          mapObject = mapplsClassObject.Map({id:  "map", properties: mapProps});
+  
+          //load map layers/components after map load, inside this callback (Recommended)
+          mapObject.on("load", ()=>{
+          // Activites after mapload
+
+          // for one marker
+          // markerObject = mapplsClassObject.Marker({
+          //   map:  mapObject,
+          //   position:{lat:28.5512908, lng:77.26809282},
+          //   });
+          //   markerObject.setPosition({lat:28.454,lng:77.5454});
+          //   markerObject.setIcon("https://www.google.com/imgres?imgurl=https%3A%2F%2Ft3.ftcdn.net%2Fjpg%2F03%2F43%2F19%2F08%2F360_F_343190831_9OJBksewrS1Ayoqb6uErcC6TitQJzbsz.jpg&tbnid=Kf8jxuWxy84lRM&vet=12ahUKEwjkqZuijuOAAxWBm2MGHYlhC88QMygHegQIARBj..i&imgrefurl=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3D%2522red%2Bdot%2522&docid=U18AU0cUEvYH7M&w=540&h=360&q=red%20dot%20small%20image&ved=2ahUKEwjkqZuijuOAAxWBm2MGHYlhC88QMygHegQIARBj");
+
+          latitudes.map((lat, index) => {
+            const lng = longitudes[index];
+            const marker = mapplsClassObject.Marker({
+                map: mapObject,
+                position: { lat, lng }
             });
-    }, []);
-
-    useEffect(() => {
-        let mapObject = null;
-        if (mapplsClassObject === null) {
-            const mapProps = { center: [28.6330, 77.2194], traffic: false, zoom: 4, geolocation: false, clickableIcons: false };
-            var mapplsObject = new mappls();
-            setMapplsClassObject(mapplsObject);
-        }
-        return () => {
-            if (mapObject) {
-                mapObject.destroy();
-            }
-        };
-    }, []);
-
-    useEffect(() => {
-        if (mapplsClassObject !== null && latitudes.length > 0 && longitudes.length > 0) {
-            mapplsClassObject.initialize("8d4096e4ba1c3cfabb2feb542bd4782c", () => {
-                let mapObjectdata = mapplsClassObject.Map({ id: "map" });
-
-                latitudes.forEach((lat, index) => {
-                    const lng = longitudes[index];
-                    const marker = mapplsClassObject.Marker({
-                        map: mapObjectdata,
-                        position: { lat, lng }
-                    });
-
-                    // You can customize the marker by adding additional properties here
-                });
-            });
-        }
-    }, [ mapplsClassObject,latitudes,longitudes]);
-
-    return <div id="map" style={styleMap} ref={mapRef}></div>;
-};
-
-
-// import React, { useState, useEffect, useRef } from 'react';
-// import { useSelector, useDispatch } from 'react-redux';
-// import { setMarkers, setZoom, setCenter } from '../reducer/slice/mapSlice';
-// import { mappls } from 'mappls-web-maps';
-
-// export const MAPLayout = () => {
-//   const dispatch = useDispatch();
-//   const markers = useSelector((state) => state.map.markers);
-//   const zoom = useSelector((state) => state.map.zoom);
-//   const center = useSelector((state) => state.map.center);
-//   const mapRef = useRef(null);
-
-//   const [mapplsClassObject, setMapplsClassObject] = useState(null);
-//   const styleMap = { width: '100%', height: '100%', display: 'inline-block', padding: '0', margin: '0' };
-
-//   useEffect(() => {
-//     if (mapplsClassObject === null) {
-//       const mapProps = { center: [28.6330, 77.2194], traffic: false, zoom: 4, geolocation: false, clickableIcons: false };
-//       var mapplsObject = new mappls();
-//       setMapplsClassObject(mapplsObject);
-//     }
-//   }, []);
-
-//   useEffect(() => {
-//     if (mapplsClassObject !== null) {
-//       mapplsClassObject.initialize('8d4096e4ba1c3cfabb2feb542bd4782c', () => {
-//         let mapObjectdata = mapplsClassObject.Map({ id: 'map' });
-
-//         // Now that you have the map object, you can use it to interact with the map library.
-//         // For example, you can add markers, set zoom, and center based on your Redux state.
-
-//         // Update Redux state when map changes
-//         mapObjectdata.on('moveend', () => {
-//           const newZoom = mapObjectdata.getZoom();
-//           const newCenter = mapObjectdata.getCenter();
-
-//           dispatch(setZoom(newZoom));
-//           dispatch(setCenter([newCenter.lat, newCenter.lng]));
-//         });
-
-//         // Update map based on Redux state
-//         mapObjectdata.setZoom(zoom);
-//         mapObjectdata.setView(center, zoom);
-//       });
-//     }
-//   }, [mapplsClassObject, zoom, center, dispatch]);
-
-//   return <div id="map" style={styleMap} ref={mapRef}></div>;
-// };
-
-
-
-
-
-
-
-
-
-
-
-// {
-//     "data":[
-//         {
-//             "location":{
-//                 "latitude":10,
-//                 "longitude":20
-//             }
-//         },
-//         {
-//             "location":{
-//                 "latitude":30,
-//                 "longitude":40
-//             }
-//         },
-//         {
-//             "location":{
-//                 "latitude":50,
-//                 "longitude":60
-//             }
-//         },
-//     ]
-// }
+             
+        });
+          })
+  
+      });
+  return (
+  <div>
+    <div  id="map"  style={styleMap}></div>
+  </div>
+  );
+  }
