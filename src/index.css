@@ -978,3 +978,82 @@ sup{
   background-color: #f4f4f4;
   padding: 10px;
 }
+
+
+
+/* Sub-dashboard component */
+
+.sub-dash-container{
+  /* border: 1px solid; */
+  display: flex;
+  gap: 10px;
+  margin-top: 2rem;
+  margin-left: 10px;
+  margin-right: 30px;
+}
+.sub-dash-container-left{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between ;
+  width: 50%;
+  /* border: 1px solid; */
+}
+.sub-dash-container-right{
+  /* display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(87vh - var(--headerHeight));
+  max-height:calc(87vh);
+  overflow-y: scroll !important;
+  height: fit-content!important;
+  position: relative;
+  z-index: 1;
+  transition: all ease-in-out 0s, transform linear 0.2s; */
+  /* border: 1px solid; */
+  width: 50%;
+}
+
+/* Add these styles to your existing CSS or create a new CSS file */
+.tab-menu {
+  display: flex;
+  justify-content: space-between; /* Distributes items evenly */
+  border-bottom: 2px solid rgb(99, 99, 249);
+  margin-bottom: 10px;
+  background-color: rgb(99, 99, 249);
+  color: white;
+}
+
+.tab-item {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  border-bottom: 2px solid transparent; /* Add this to create an underline effect */
+  transition: border-bottom-color 0.3s ease-in-out;
+}
+
+.tab-item.active {
+  border-bottom-color: #fbfbfb; /* Change this color to match your design */
+}
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+/* #customers tr:nth-child(even){background-color: #f2f2f2;} */
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #0d3896;
+  color: white;
+}

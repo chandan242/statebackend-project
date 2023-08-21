@@ -10,6 +10,7 @@ import { setNavigationOpen } from './reducer/slice/commonSlice';
 
 function App() {
   let {navigationOpen} = useSelector( (state) => state.common );
+  console.log(navigationOpen);
   const dispatch = useDispatch()
   const userDetails = useContext(UserContext);
   console.log("User Context Data", userDetails);

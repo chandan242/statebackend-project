@@ -7,11 +7,18 @@ import { fetchMapData, refreshMapData } from '../reducer/thunk/mapDataThunk';
 
   export const MAPLayout = () => {
     const dispatch = useDispatch();
+    let markers = [];
     const { latitudes, longitudes, locations } = useSelector((state) => state.mapData);
   
     useEffect(() => {
       dispatch(fetchMapData());
-      dispatch(refreshMapData());
+      // dispatch(refreshMapData());
+      // const cleanup = dispatch(refreshMapData()); // Start refreshing data
+
+      // return () => {
+      //   // Clean up the interval when the component unmounts
+      //   cleanup();
+      // };
     }, [dispatch]);
   
     // const [latitudes, setLatitudes] = useState([]);
@@ -49,14 +56,16 @@ import { fetchMapData, refreshMapData } from '../reducer/thunk/mapDataThunk';
           //   });
           //   markerObject.setPosition({lat:28.454,lng:77.5454});
           //   markerObject.setIcon("https://www.google.com/imgres?imgurl=https%3A%2F%2Ft3.ftcdn.net%2Fjpg%2F03%2F43%2F19%2F08%2F360_F_343190831_9OJBksewrS1Ayoqb6uErcC6TitQJzbsz.jpg&tbnid=Kf8jxuWxy84lRM&vet=12ahUKEwjkqZuijuOAAxWBm2MGHYlhC88QMygHegQIARBj..i&imgrefurl=https%3A%2F%2Fstock.adobe.com%2Fsearch%3Fk%3D%2522red%2Bdot%2522&docid=U18AU0cUEvYH7M&w=540&h=360&q=red%20dot%20small%20image&ved=2ahUKEwjkqZuijuOAAxWBm2MGHYlhC88QMygHegQIARBj");
-
-          latitudes.map((lat, index) => {
+          
+          markers.forEach(marker => marker.remove());
+          markers = [];
+          latitudes.forEach((lat, index) => {
             const lng = longitudes[index];
             const marker = mapplsClassObject.Marker({
                 map: mapObject,
                 position: { lat, lng }
             });
-             
+            markers.push(marker);
         });
           })
   
@@ -67,3 +76,7 @@ import { fetchMapData, refreshMapData } from '../reducer/thunk/mapDataThunk';
   </div>
   );
   }
+
+
+
+  // when fetch location and show in map then some bug in map it not shows properly and sometimes it shows double, so bug fixed in map component

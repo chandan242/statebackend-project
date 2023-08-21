@@ -36,6 +36,8 @@ import { AddDeviceInventory } from './screens/deviceInventory/addDeviceInventory
 import { Provider } from "react-redux";
 import rootReducer from "./reducer/index.js";
 import {configureStore} from "@reduxjs/toolkit"
+import SubDashboard from './components/SubDashboard.jsx';
+import VehicleReg from './components/VehicleReg.jsx';
 // import thunkMiddleware from 'redux-thunk';
 
 const store = configureStore({
@@ -64,6 +66,14 @@ const router = createBrowserRouter([
       {
         path: "reports",
         element: <Reports />,
+      },
+      {
+        path: "/sub-dash",
+        element: <SubDashboard/>,
+      },
+      {
+        path: "/vehicle-track",
+        element: <VehicleReg/>,
       },
       {
         path: "rtos",  
@@ -128,7 +138,8 @@ const router = createBrowserRouter([
         ]
       }
     ]
-  }])
+  }
+])
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(

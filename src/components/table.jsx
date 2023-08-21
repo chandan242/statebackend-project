@@ -443,14 +443,14 @@ export const DynamicTable = (params) => {
           {
             isPdfDownloadBtnVisible?(
               <div className="download-btn-container">
-                <button onClick={()=>downloadExcel(list,'imp')}>Download as <SiMicrosoftexcel/></button>
+                <button onClick={()=>downloadExcel(list,'imp')}><SiMicrosoftexcel/> Export as Excel</button>
               </div>
             ):null
           }
           {
             isExcelDownloadBtnVisible?(
               <div className="download-btn-container">
-                <button onClick={onPDFDownload}>Download as <AiOutlineFilePdf/></button>
+                <button onClick={onPDFDownload}><AiOutlineFilePdf/> Export as PDF</button>
               </div>
             ):null
           }

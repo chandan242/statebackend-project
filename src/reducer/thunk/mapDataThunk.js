@@ -11,8 +11,10 @@ export const fetchMapData = () => async (dispatch) => {
 };
 
 export const refreshMapData = () => (dispatch) => {
-  dispatch(fetchMapData());
-  setTimeout(() => {
-    dispatch(refreshMapData());
+  const refreshInterval = setInterval(() => {
+    dispatch(fetchMapData());
   }, 30000); // Refresh every 30 seconds
+
+  // Return a cleanup function to clear the interval when the component unmounts
+  return () => clearInterval(refreshInterval);
 };
