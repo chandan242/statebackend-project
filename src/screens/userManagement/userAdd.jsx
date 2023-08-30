@@ -4,10 +4,14 @@ import { UserPermissions } from "../../constants/permissions";
 import { addUserAPI } from "../../apis/users";
 import { LoadingWidget } from "../../components/loading";
 import useFormValidation from "../../constants/Validation";
+import { useNavigate } from "react-router-dom";
 
 export const AddUser = (props) => {
-
-    const entityType = props.entityType || "DST"
+  const navigate = useNavigate();
+  
+  const entityType = props.entityType || "DST"
+  const trasfers = props.navigateto
+  console.log(trasfers);
     
     // const filteredPermissions = UserPermissions.filter(item=>item["users"].includes(entityType))    
 
@@ -83,6 +87,7 @@ export const AddUser = (props) => {
             const response = await addUserAPI(uploadData)
             console.log(response, "user created")
             setIsLoading(false)
+            navigate(`${trasfers}`);
         }
         else{
           setTimeout(() => {

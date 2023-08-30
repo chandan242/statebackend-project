@@ -136,7 +136,7 @@ export const AddDistributor = () => {
         <>
         <p className="form-heading-para">ADD DISTRIBUTORS</p><hr />
         <div  className="form-container">  
-            {userAddition ? <AddUser entityType = "DST" /> : 
+            {userAddition ? <AddUser entityType = "DST" navigateto={'/distributors/listDistributor'}/> : 
             isLoading ? <LoadingWidget/> : <form>
                 <div className="form-tag">
                     <p className="form-identifire-para">Distributor identifiers</p>

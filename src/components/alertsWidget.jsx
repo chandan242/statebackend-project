@@ -25,7 +25,7 @@ const getAlerts = {
       name: "Alerts (With in Last 10 Minutes)",
       icon: allalert,
       noofalerts: "",
-      link:'/sub-dash'
+      link:'/sub-dash-alert'
     },
     {
       id: 1,
@@ -50,7 +50,7 @@ const getAlerts = {
     },
     {
       id: 4,
-      name: "Low Battery Removed",
+      name: "Battery Removed",
       icon: batteryicon,
       noofalerts: 7,
       link:'/'
@@ -60,14 +60,14 @@ const getAlerts = {
       name: "Ignition On",
       icon: engineon,
       noofalerts: 38,
-      link:'/'
+      link:'/sub-dash-iginition'
     },
     {
       id: 6,
       name: "Ignition Off",
       icon: engineoff,
       noofalerts: 310,
-      link:'/'
+      link:'/sub-dash-iginition'
     },
     {
       id: 7,
@@ -102,28 +102,28 @@ const getAlerts = {
       name: "Emergency State On",
       icon: alertoff,
       noofalerts: 242,
-      link:'/'
+      link:'/sub-dash-emergency'
     },
     {
       id: 12,
       name: "Emergency State Off",
       icon: panic,
       noofalerts: 2,
-      link:'/'
+      link:'/sub-dash-emergency'
     },
     {
       id: 13,
       name: "Disconnect Main Battery",
       icon: Cut,
       noofalerts: 21,
-      link:'/'
+      link:'/sub-dash-battery'
     },
     {
       id: 14,
       name: "Connect to Main Battery",
       icon: number,
       noofalerts: 31,
-      link:'/'
+      link:'/sub-dash-battery'
     },
   ],
 };
@@ -147,7 +147,7 @@ export const Alerts = () => {
           {getAlerts.result.map(({ id, name, icon, noofalerts, link }) => {
             return (
               <li className="alert-widget-item" key={id}>
-                <Link to={link} className="" id="get"  >
+                <Link to={link} className="" id="get">
                   <img alt="Manufacture" src={icon}/>
                   <span>{name}</span>
                   <span>
@@ -162,6 +162,3 @@ export const Alerts = () => {
     </div>
   );
 };
-
-
-

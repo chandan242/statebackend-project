@@ -1,5 +1,6 @@
 import { logout } from "../apis/authentication";
-import { useState } from "react"
+import { useState,useEffect, useContext } from "react"
+import { UserContext } from "../context/userContext";
 import {AiFillDashboard} from 'react-icons/ai'
 import {MdOutlineInventory2} from 'react-icons/md'
 import {TbReportSearch} from 'react-icons/tb'
@@ -13,26 +14,124 @@ import {BiLogOut} from 'react-icons/bi'
 import { Link } from "react-router-dom";
 import { matchPath, useLocation } from "react-router-dom"
 import ConfirmationModal from "./ConfirmationModel";
+import { getUserRoles } from "../apis/users";
 
 const Sidebar = ({navigationOpen}) => {
   const [confirmationModal, setConfirmationModal] = useState(null)
-
+  const [userRoles, setUserRoles] = useState([]);
+  const [userCodes,setUserCodes] = useState([])
   const location = useLocation()
+  let navigation_panel;
   const matchRoute = (route) => {
     return matchPath({ path: route }, location.pathname)
   }
 
-    const navigation_panel = [
-        {baseRoute:"dashboard", label:"Dashboard",icon:<AiFillDashboard/>, default:"/"},  
-        {baseRoute:"deviceInventory", label:"Device Inventory",icon:<MdOutlineInventory2/>, default:"/deviceInventoryList"},
-        {baseRoute:"rtos", label:"RTOs",icon:<MdOutlineCountertops/>, default:"/listRTO"},
-        {baseRoute:"manufacturers", label:"Manufacturers",icon:<MdPrecisionManufacturing/>, default:"/listManufacturer"},
-        {baseRoute:"distributors", label:"Distributors",icon:<BsDistributeVertical/>, default:"/listDistributor"},
-        {baseRoute:"deviceApproval", label:"Device Types",icon:<DiHtml5DeviceAccess/>, default:"/listDeviceApproval"},  
-        {baseRoute:"masters", label:"Masters",icon:<SiMastercomfig fill="white"/>, default:"/listESIMProviders"},
-        {baseRoute:"userManagement", label:"User Management",icon:<BiUser/>, default:"/listUser"},
-        {baseRoute:"reports", label:"Reports",icon:<TbReportSearch/>, default:"/"},
-      ]
+  const userDetails = useContext(UserContext);
+  const user = userDetails.userType
+
+  const roleAdminTitles = {
+    DST: "DST Admin",
+    RTO: "RTO Admin",
+    SBU: "SBU Admin",
+    MNF: "MNF Admin",
+  };
+  
+
+  useEffect(() => {
+    // const fetchUserRoles = async () => {
+    //   try {
+    //     const response = await axios.get(
+    //       `http://www.thexyz.biz:8087/api/UserRoles/getuserrole?userid=${id}`,
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //       }
+    //     );
+    //     if (response.data.status) {
+    //       const userRoleNames = response.data.result.map((role) => role.name);
+    //       setUserRoles(userRoleNames);
+    //       console.log(userRoleNames);
+    //     }
+    //   } catch (error) {
+    //     console.error("Error fetching user roles:", error);
+    //   }
+    // };
+
+    // fetchUserRoles();
+    const fetchUserRoles = async () => {
+      try {
+        const { userRoleNames, userCode } = await getUserRoles();
+        setUserRoles(userRoleNames);
+        setUserCodes(userCode);
+        console.log(userRoleNames,userCode);
+      } catch (error) {
+        console.error("Error fetching user roles:", error);
+      }
+    };
+
+    fetchUserRoles();
+  }, []);
+
+
+  if (user === "DST") {
+    navigation_panel = [
+      { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
+      ...userRoles.map((data,index) => ({
+        baseRoute: `/${userCodes[index]}`,
+        label: data,
+        icon:<AiFillDashboard/>,
+        default: "/",
+      })),
+    ];
+  }
+
+  else if(user === "RTO"){
+    navigation_panel = [
+      { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
+      ...userRoles.map((data,index) => ({
+        baseRoute: `/${userCodes[index]}`,
+        label: data,
+        icon:<AiFillDashboard/>,
+        default: "/",
+      })),
+    ];
+  }
+  else if(user === "SBU"){
+    navigation_panel = [
+      { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
+      ...userRoles.map((data,index) => ({
+        baseRoute:`/${userCodes[index]}`,
+        label: data,
+        icon:<AiFillDashboard/>,
+        default: "/",
+      })),
+    ];
+ }
+ else if(user === "MNF"){
+  navigation_panel = [
+    { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
+    ...userRoles.map((data,index) => ({
+      baseRoute: `/${userCodes[index]}`,
+      label: data,
+      icon:<AiFillDashboard/>,
+      default: "/",
+    })),
+  ];
+}
+  else{
+    navigation_panel = [
+      {baseRoute:"dashboard", label:"Dashboard",icon:<AiFillDashboard/>, default:"/"},  
+      {baseRoute:"deviceInventory", label:"Device Inventory",icon:<MdOutlineInventory2/>, default:"/deviceInventoryList"},
+      {baseRoute:"rtos", label:"RTOs",icon:<MdOutlineCountertops/>, default:"/listRTO"},
+      {baseRoute:"manufacturers", label:"Manufacturers",icon:<MdPrecisionManufacturing/>, default:"/listManufacturer"},
+      {baseRoute:"distributors", label:"Distributors",icon:<BsDistributeVertical/>, default:"/listDistributor"},
+      {baseRoute:"deviceApproval", label:"Device Types",icon:<DiHtml5DeviceAccess/>, default:"/listDeviceApproval"},  
+      {baseRoute:"masters", label:"Masters",icon:<SiMastercomfig fill="white"/>, default:"/listESIMProviders"},
+      {baseRoute:"userManagement", label:"User Management",icon:<BiUser/>, default:"/listUser"},
+      {baseRoute:"reports", label:"Reports",icon:<TbReportSearch/>, default:"/"},
+    ]
+  }
       const navigation_tab_active = (data) => {
         return  <div className="sidebar-navigation-tab">            
                     <Link to={data.baseRoute} className={navigationOpen?"sidebar-navigation-item":"sidebar-navigation-item-s"}>
@@ -55,9 +154,9 @@ const Sidebar = ({navigationOpen}) => {
     <div className="sidebar-container">
       <div className={navigationOpen?"sidenav-main-logo":"sidenav-main-logo-expand"}>
         <div><img src="https://vlt.uk.gov.in/Content/image/logo4.png" alt="" /></div>
-        <h3>ADMIN</h3>
+        <h3>{roleAdminTitles[user] || "ADMIN"} </h3>
       </div><hr />
-        {
+      {
         navigation_panel.map((item,index)=>{
           return (
             <div key={index} className="sidebar-items">
@@ -66,6 +165,8 @@ const Sidebar = ({navigationOpen}) => {
           )
         })
       }
+      
+
       <div onClick={() =>
               setConfirmationModal({
                 text1: "Are you sure?",

@@ -7,7 +7,7 @@ import mapDataReducer from '../reducer/slice/mapDataSlice';
 const rootReducer  = combineReducers({
     common: commonReducer,
     map: mapReducer,
-    mapData:mapDataReducer
+    mapData:mapDataReducer,
 })
 
 export default rootReducer

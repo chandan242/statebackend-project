@@ -30,7 +30,6 @@ export const ManufacturerList = () => {
             console.log(result, "MNF")
             setDistributorss(result)
         }
-    
         fetchData()
 
     },[])
@@ -61,7 +60,7 @@ export const ManufacturerList = () => {
     return(
         <div>
             <div className="table-header-section">
-            <p className="table-listp">Distributors List</p>
+            <p className="table-listp">Manufactures List</p>
                 {/* <div className="download-btn-container">
                     <button onClick={()=>downloadExcel(distributors,'imp')}>Download as Ms Excel</button>
                     <button onClick={handlePDFDownload}>Download as PDF</button>

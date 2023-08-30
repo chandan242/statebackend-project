@@ -90,19 +90,19 @@ export const AddManufacturer = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (validateForm()) {
+        // if (validateForm()) {
             setIsLoading(true)
             const uploadData = {...data}
             uploadData["entityType"] = "MNF"
             const response = await addentity(uploadData)
             setUserAddition(true)
             setIsLoading(false)
-        }
-        else{
-          setTimeout(() => {
-            setErrors({});    
-          }, 5000);
-        }
+        // }
+        // else{
+        //   setTimeout(() => {
+        //     setErrors({});    
+        //   }, 5000);
+        // }
     }
 
     const formFieldUI = (label, name, type, star) => {
@@ -125,7 +125,7 @@ export const AddManufacturer = () => {
         <>
         <p className="form-heading-para">ADD MANUFACTURER</p><hr />
         <div  className="form-container">  
-            {userAddition ? <AddUser entityType = "MNF" /> : 
+            {userAddition ? <AddUser entityType = "MNF" navigateto={'/manufacturers/listManufacturer'}/> : 
             isLoading ? <LoadingWidget /> : <form>
                 <div className = "form-tag">
                     <p className="form-identifire-para">Manufacturer identifiers</p>

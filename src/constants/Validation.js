@@ -9,9 +9,9 @@ export const validateUsername = (username) => {
       errors.push("Username must be at least 3 characters long");
     }
   
-    if (username && username.length > 10) {
-      errors.push("Username cannot be longer than 10 characters");
-    }
+    // if (username && username.length > 10) {
+    //   errors.push("Username cannot be longer than 10 characters");
+    // }
   
     if (username && !/^[a-zA-Z]+$/.test(username)) {
       errors.push("Username must contain only letters");
@@ -39,7 +39,7 @@ export const validateUsername = (username) => {
     if (!password) {
       errors.push("Password cannot be empty");
     }
-    else if (password && password.length < 6) {
+    else if (password && password.length < 4) {
       errors.push("Password must be at least 6 characters long");
     }
     else if (password && password.length > 20) {
@@ -48,9 +48,9 @@ export const validateUsername = (username) => {
     // else if (!/(?=.*[A-Z])/.test(password)) {
     //   errors.push("Password must contain at least one uppercase letter");
     // }
-    else if (!/(?=.*[a-z])/.test(password)) {
-      errors.push("Password must contain at least one lowercase letter");
-    }
+    // else if (!/(?=.*[a-z])/.test(password)) {
+    //   errors.push("Password must contain at least one lowercase letter");
+    // }
     else if (!/(?=.*[0-9])/.test(password)) {
       errors.push("Password must contain at least one number");
     }

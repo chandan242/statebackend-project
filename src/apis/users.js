@@ -1,5 +1,6 @@
 import {BaseURL} from '../constants/baseURL'
 
+
 export const addUserAPI = async (data) =>{
     let token = localStorage.getItem("token");
 
@@ -44,3 +45,26 @@ export const updateUserRole = async (data) =>{
     return responseParsed;
 }
 
+import axios from "axios";
+export const getUserRoles = async () => {
+  try {
+    let token = localStorage.getItem("token");
+    let id = localStorage.getItem('id')
+    const response = await axios.get(
+      `http://www.thexyz.biz:8087/api/UserRoles/getuserrole?userid=${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (response.data.status) {
+      const userRoleNames = response.data.result.map((role) => role.name);
+      const userCode = response.data.result.map((role) => role.code);
+      return {userRoleNames,userCode};
+    }
+  } catch (error) {
+    console.error("Error fetching user roles:", error);
+    throw error;
+  }
+};

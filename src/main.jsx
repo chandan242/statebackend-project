@@ -38,6 +38,11 @@ import rootReducer from "./reducer/index.js";
 import {configureStore} from "@reduxjs/toolkit"
 import SubDashboard from './components/SubDashboard.jsx';
 import VehicleReg from './components/VehicleReg.jsx';
+import AlertSubDash from './components/AlertSubDash.jsx';
+import SubDashIginition from './components/sub_dashboard/SubDashIginition.jsx';
+import SubDashBattery from './components/sub_dashboard/SubDashBattery.jsx';
+import SubDashEmegency from './components/sub_dashboard/SubDashEmegency.jsx';
+// import 
 // import thunkMiddleware from 'redux-thunk';
 
 const store = configureStore({
@@ -68,6 +73,22 @@ const router = createBrowserRouter([
         element: <Reports />,
       },
       {
+        path: "/sub-dash-alert",
+        element: <AlertSubDash/>,
+      },
+      {
+        path: "/sub-dash-emergency",
+        element: <SubDashEmegency/>,
+      },
+      {
+        path: "/sub-dash-battery",
+        element: <SubDashBattery/>,
+      },
+      {
+        path: "/sub-dash-iginition",
+        element: <SubDashIginition/>,
+      },
+      {
         path: "/sub-dash",
         element: <SubDashboard/>,
       },
@@ -89,7 +110,7 @@ const router = createBrowserRouter([
         element: <Manufacturer />,
         children:[
           {path: "listManufacturer", element: <ManufacturerList />},
-          {path: "addManufacturer", element: <AddManufacturer />},
+          true? {path: "addManufacturer", element: <AddManufacturer />} : null
         ]
       },
       {
@@ -97,7 +118,8 @@ const router = createBrowserRouter([
         element: <Distributor />,
         children:[
           {path: "listDistributor", element: <DistributorList />},
-          {path: "addDistributor", element: <AddDistributor />},
+          {path: "addDistributor", element:<AddDistributor />},
+          // {path: "addDistributor", element:true? null :<AddDistributor />},
         ]
       },
       {

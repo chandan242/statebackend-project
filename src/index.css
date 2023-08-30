@@ -172,6 +172,7 @@ body {
   display: flex;
   /* gap: 5px; */
 }
+
 .sidebar-item{
   padding: 10px;
   margin: 0;
@@ -188,6 +189,7 @@ body {
   white-space: nowrap;
   /* padding-top: 3rem; */
 }
+
 .container-item-shrink{
   width: calc(100vw - 220px);
 }
@@ -1056,4 +1058,5 @@ sup{
   text-align: left;
   background-color: #0d3896;
   color: white;
+  font-size: 14px;
 }

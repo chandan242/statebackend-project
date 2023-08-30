@@ -126,7 +126,7 @@ export const AddRTO = () => {
       <hr />
       <div className="form-container">
         {userAddition ? (
-          <AddUser entityType="RTO" />
+          <AddUser entityType="RTO" navigateto={'/rtos/listRTO'}/>
         ) : isLoading ? (
           <LoadingWidget />
         ) : (
