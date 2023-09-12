@@ -16,11 +16,14 @@ export const Distributor = () => {
                         <li className="nav-item">
                             <Link className = {` ${matchRoute(`distributors/listDistributor`)?"sub-nav-text-active":"sub-nav-text"}`} to={`listDistributor`}>All Distributors</Link>
                         </li>
-{/* {   true?null:                     <li className="nav-item">
+                        {/* { true ? null : <li className="nav-item">
                             <Link className = {` ${matchRoute(`distributors/addDistributor`)?"sub-nav-text-active":"sub-nav-text"}`} to={`addDistributor`}>Add Distributor</Link>
                         </li>} */}
                         <li className="nav-item">
                             <Link className = {` ${matchRoute(`distributors/addDistributor`)?"sub-nav-text-active":"sub-nav-text"}`} to={`addDistributor`}>Add Distributor</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className = {` ${matchRoute(`distributors/distributorApproval`)?"sub-nav-text-active":"sub-nav-text"}`} to={`distributorApproval`}>Distributor Approval</Link>
                         </li>
                     </ul>
                 </nav>      

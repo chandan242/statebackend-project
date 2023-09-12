@@ -18,6 +18,9 @@ export const DeviceApproval = () => {
                     <li className="nav-item">
                         <Link className = {` ${matchRoute(`deviceApproval/addDeviceApproval`)?"sub-nav-text-active":"sub-nav-text"}`} to={`addDeviceApproval`}>Add Device</Link>
                     </li>
+                    <li className="nav-item">
+                        <Link className = {` ${matchRoute(`deviceApproval/deviceApproval`)?"sub-nav-text-active":"sub-nav-text"}`} to={`deviceApproval`}>Device Approval</Link>
+                    </li>
                 </ul>
             </nav>
 

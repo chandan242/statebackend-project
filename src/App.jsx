@@ -21,7 +21,7 @@ function App() {
       <div className='wrapper'>
       <div className='navs'>
         <div className="nav-title">
-          {
+          {   
             localStorage.getItem("token") && <GiHamburgerMenu size={30} onClick={()=>dispatch(setNavigationOpen(!navigationOpen))}/>
           }
           <h4>State Backend</h4>
@@ -45,7 +45,7 @@ function App() {
           </div>
         </div>
       </div> 
-    </div>
+    </div> 
       ) : (
         <PublicPage />
       )}
@@ -54,3 +54,4 @@ function App() {
 }
 
 export default App;
+

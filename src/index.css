@@ -1060,3 +1060,42 @@ sup{
   color: white;
   font-size: 14px;
 }
+
+
+/* Distributor Apprioval */
+.distributor-approval-table {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  background-color: #F7F7F7;
+  font-family: Arial, sans-serif;
+}
+.distributor-approval-table h2 {
+  margin-bottom: 10px;
+  color: #333;
+}
+.distributor-approval-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.distributor-approval-table th, .distributor-approval-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+.distributor-approval-table th {
+  background-color: #F2F2F2;
+  font-weight: bold;
+}
+.distributor-approval-table tbody tr:nth-child(even) {
+  background-color: #F2F2F2;
+}
+.distributor-approval-table tbody tr:hover {
+  background-color: #E0E0E0;
+}
+.distributor-approval-table th:first-child, .distributor-approval-table td:first-child {
+  padding-left: 20px;
+}
+.distributor-approval-table th:last-child, .distributor-approval-table td:last-child {
+  padding-right: 20px;
+}

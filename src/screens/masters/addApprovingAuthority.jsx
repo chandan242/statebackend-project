@@ -26,7 +26,7 @@ export const AddApprovingAuthority = () => {
         contactName:'',
         emailId:'',
         contactNo:''
-      };
+    };
   
       const validationRules = {
         entityCode: {

@@ -42,6 +42,9 @@ import AlertSubDash from './components/AlertSubDash.jsx';
 import SubDashIginition from './components/sub_dashboard/SubDashIginition.jsx';
 import SubDashBattery from './components/sub_dashboard/SubDashBattery.jsx';
 import SubDashEmegency from './components/sub_dashboard/SubDashEmegency.jsx';
+import Add_Device from './components/dynamic_admin/Add_Device.jsx';
+import { DistributorApproval } from './components/DistributorApproval.jsx';
+import { DeviceApprovedStatus } from './components/DeviceApprovedStatus.jsx';
 // import 
 // import thunkMiddleware from 'redux-thunk';
 
@@ -119,6 +122,7 @@ const router = createBrowserRouter([
         children:[
           {path: "listDistributor", element: <DistributorList />},
           {path: "addDistributor", element:<AddDistributor />},
+          {path: "distributorApproval", element:<DistributorApproval />},
           // {path: "addDistributor", element:true? null :<AddDistributor />},
         ]
       },
@@ -136,6 +140,7 @@ const router = createBrowserRouter([
         children:[
           {path: "listDeviceApproval", element: <DeviceApprovalList />},
           {path: "addDeviceApproval", element: <AddDeviceApproval />},
+          {path: "deviceApproval", element: <DeviceApprovedStatus />},
         ]
       },
       {
@@ -158,7 +163,103 @@ const router = createBrowserRouter([
           {path: "listISP", element: <ISPList />},
           {path: "addISP", element: <AddISP />},
         ]
-      }
+      },
+      {
+        path:"add_device",
+        element:<Add_Device/>
+      },
+      {
+        path:"map_device_to_vehicle",
+        element:<Add_Device/>
+      },
+      {
+        path:"view_list_of_devices",
+        element:<Add_Device/>
+      },
+      {
+        path:"device_detail",
+        element:<Add_Device/>
+      },
+      {
+        path:"update_device_detail",
+        element:<Add_Device/>
+      },
+      {
+        path:"map_device_to_vehicle",
+        element:<Add_Device/>
+      },
+      {
+        path:"add_distributor",
+        element:<Add_Device/>
+      },
+      {
+        path:"update_distributor",
+        element:<Add_Device/>
+      },
+      {
+        path:"distributor_user_management",
+        element:<Add_Device/>
+      },
+      {
+        path:"add_device_type",
+        element:<Add_Device/>
+      },
+      {
+        path:"update_device_type",
+        element:<Add_Device/>
+      },
+      {
+        path:"device_approval",
+        element:<Add_Device/>
+      },
+      {
+        path:"add_rto",
+        element:<Add_Device/>
+      },
+      {
+        path:"update_rto",
+        element:<Add_Device/>
+      },
+      {
+        path:"rto_user_management",
+        element:<Add_Device/>
+      },
+      {
+        path:"add_internet_service_provider",
+        element:<Add_Device/>
+      },
+      {
+        path:"update_internet_service_provider",
+        element:<Add_Device/>
+      },
+      {
+        path:"internet_service_provider_details",
+        element:<Add_Device/>
+      },
+      {
+        path:"add_esim_provider",
+        element:<Add_Device/>
+      },
+      {
+        path:"update_esim_provider",
+        element:<Add_Device/>
+      },
+      {
+        path:"esim_provider_detail",
+        element:<Add_Device/>
+      },
+      {
+        path:"add_manufacturer",
+        element:<Add_Device/>
+      },
+      {
+        path:"update_manufacturer",
+        element:<Add_Device/>
+      },
+      {
+        path:"manufacturer_user_management",
+        element:<Add_Device/>
+      },
     ]
   }
 ])
