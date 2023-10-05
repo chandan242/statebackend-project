@@ -74,7 +74,7 @@ const getAlerts = {
       name: "Device Tampered",
       icon: DeviceTampered,
       noofalerts: 3564,
-      link:'/'
+      link:'/sub-dash-device-tempered'
     },
     {
       id: 8,
@@ -102,14 +102,14 @@ const getAlerts = {
       name: "Emergency State On",
       icon: alertoff,
       noofalerts: 242,
-      link:'/sub-dash-emergency'
+      link:'/'
     },
     {
       id: 12,
       name: "Emergency State Off",
       icon: panic,
       noofalerts: 2,
-      link:'/sub-dash-emergency'
+      link:'/'
     },
     {
       id: 13,

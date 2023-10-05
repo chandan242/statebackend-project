@@ -25,7 +25,7 @@ function App() {
             localStorage.getItem("token") && <GiHamburgerMenu size={30} onClick={()=>dispatch(setNavigationOpen(!navigationOpen))}/>
           }
           <h4>State Backend</h4>
-        </div>
+        </div>  
         <div>
           <FaUserAstronaut size={30} style={{marginRight:"10px"}}/>
         </div>
@@ -45,7 +45,7 @@ function App() {
           </div>
         </div>
       </div> 
-    </div> 
+    </div>
       ) : (
         <PublicPage />
       )}
@@ -54,4 +54,3 @@ function App() {
 }
 
 export default App;
-

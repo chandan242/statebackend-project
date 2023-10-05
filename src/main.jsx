@@ -41,10 +41,17 @@ import VehicleReg from './components/VehicleReg.jsx';
 import AlertSubDash from './components/AlertSubDash.jsx';
 import SubDashIginition from './components/sub_dashboard/SubDashIginition.jsx';
 import SubDashBattery from './components/sub_dashboard/SubDashBattery.jsx';
-import SubDashEmegency from './components/sub_dashboard/SubDashEmegency.jsx';
+import SubDashEmegencyAlert from './components/sub_dashboard/SubDashEmegencyAlert.jsx';
 import Add_Device from './components/dynamic_admin/Add_Device.jsx';
 import { DistributorApproval } from './components/DistributorApproval.jsx';
 import { DeviceApprovedStatus } from './components/DeviceApprovedStatus.jsx';
+import SubDeviceTempered from './components/sub_dashboard/SubDeviceTempered.jsx';
+import SubDeviceSending from './components/sub_dashboard/SubDeviceSending.jsx';
+import SubESIMValidity from './components/sub_dashboard/SubESIMValidity.jsx';
+import SubDeviceTotalAlerts from './components/sub_dashboard/SubDeviceTotalAlerts.jsx';
+import SubVehicleMapSearch from './components/sub_dashboard/SubVehicleMapSearch.jsx';
+import SubDashHealth from './components/sub_dashboard/SubDashHealth.jsx';
+import MiniDashboard from './components/sub_dashboard/MiniDashboard.jsx';
 // import 
 // import thunkMiddleware from 'redux-thunk';
 
@@ -52,7 +59,6 @@ const store = configureStore({
   reducer:rootReducer,
   // middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(thunkMiddleware),
 });
-
 
 const router = createBrowserRouter([
   {
@@ -76,12 +82,40 @@ const router = createBrowserRouter([
         element: <Reports />,
       },
       {
-        path: "/sub-dash-alert",
-        element: <AlertSubDash/>,
+        path: "/sub-dash-mini",
+        element: <MiniDashboard/>,
       },
       {
-        path: "/sub-dash-emergency",
-        element: <SubDashEmegency/>,
+        path: "/sub-dash-emergency-alert",
+        element: <SubDashEmegencyAlert/>,
+      },
+      {
+        path: "/sub-dash-health",
+        element: <SubDashHealth/>,
+      },
+      {
+        path: "/sub-dash-device-tempered",
+        element: <SubDeviceTempered/>,
+      },
+      {
+        path: "/sub-dash-device-sending",
+        element: <SubDeviceSending/>,
+      },
+      {
+        path: "/sub-dash-esim-validity",
+        element: <SubESIMValidity/>,
+      },
+      {
+        path: "/sub-dash-device-total-alert",
+        element: <SubDeviceTotalAlerts/>,
+      },
+      {
+        path: "/sub-dash-vehicle-map-search",
+        element: <SubVehicleMapSearch/>,
+      },
+      {
+        path: "/sub-dash-alert",
+        element: <AlertSubDash/>,
       },
       {
         path: "/sub-dash-battery",
