@@ -489,3 +489,175 @@
   color: #fff;
   font-weight: bold;
 }
+
+
+
+/* SUB-DASH EMERGENCY COMPONENT CSS */
+.EmergencyAlert-inputs {
+  display: flex;
+  justify-content: space-between; /* Space evenly between items */
+  align-items: center; /* Vertically center items */
+
+  /* Adjust the following as needed */
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+.emergency-input,
+.legends {
+  flex: 1; /* Expand to fill available space */
+  gap: 20px;
+}
+
+.emergency-input {
+  display: flex;
+  align-items: center; /* Vertically center the label and input */
+}
+
+.emergency-input label {
+  margin-right: 10px;
+}
+
+.fetch-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Add styles for legends as needed */
+
+
+.legend-icon {
+  font-size: 20px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.legend-success {
+  color: green;
+}
+
+.legend-failed {
+  color: red;
+}
+
+.legend-pending {
+  color: orange;
+}
+/* Style for the container holding the table */
+
+
+/* Style for the table */
+.emergency-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  /* color: #fff; */
+}
+
+/* Style for table headings */
+.emergency-table th {
+  background-color:rgb(13, 58, 132);
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style for table cells */
+.emergency-table td {
+  padding: 10px;
+  text-align: center;
+}
+
+/* Style for odd rows */
+.emergency-table tbody tr:nth-child(odd) {
+  background-color: #f2f2f2;
+}
+
+/* Style for even rows */
+.emergency-table tbody tr:nth-child(even) {
+  background-color: #ffffff;
+}
+/* Add this CSS to your 'Emergency.css' file */
+
+.emergency-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Adjust alignment as needed */
+  padding: 10px; /* Add padding as needed */
+  margin: 10px;
+}
+
+.scatter-plot {
+  flex: 1; /* Allow the graph to take available space */
+  margin-right: 50px; /* Add margin between the graph and table */
+  border: 1px solid #ccc; /* Add border around the scatter-plot */
+  border-radius: 5px; /* Add border radius for aesthetics */
+  padding: 10px; /* Add padding inside the border */
+}
+
+
+.table-list {
+  flex: 1; /* Allow the table to take available space */
+}
+
+/* Style your table as needed */
+#customers {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 50px;
+}
+
+#customers th, #customers td {
+  padding: 10px;
+  text-align: left;
+}
+
+#customers th {
+  background-color:rgb(13, 58, 132);
+  color: #fff;
+}
+
+/* Add additional table styling as needed */
+.excel-emergency{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+
+
+
+.combined-container{
+  padding: 8px 16px 8px 0px ;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.emergency-search {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.left-side-bars {
+  display: flex;
+  align-items: center;
+}
+
+.right-side-bars {
+  flex-grow: 1;
+  text-align: right;
+}
+
+label {
+  margin-right: 5px;
+}

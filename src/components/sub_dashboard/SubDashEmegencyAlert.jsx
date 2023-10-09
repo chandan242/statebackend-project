@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { SiMicrosoftexcel } from 'react-icons/si';
 import { MAPLayout } from '../map';
 
-const SubDashEmegencyAlert = () => {
+const SubDashEmergencyAlert = () => {
   // State to track whether the alarm is ON or OFF
   const [alarmOn, setAlarmOn] = useState(false);
 
@@ -163,89 +163,209 @@ const SubDashEmegencyAlert = () => {
     console.log('Date and Time To:', dateTimeTo);
   };
 
-  const svgRef = useRef(null);
+  const chartRef = useRef(null);
 
-  useEffect(() => {
-    // Sample data for two series
-    const data1 = [
-      { x: 10, y: 20 },
-      { x: 20, y: 40 },
-      { x: 30, y: 10 },
-      { x: 40, y: 30 },
-      { x: 50, y: 15 },
-    ];
 
-    const data2 = [
-      { x: 10, y: 10 },
-      { x: 20, y: 30 },
-      { x: 30, y: 25 },
-      { x: 40, y: 45 },
-      { x: 50, y: 5 },
-    ];
+  // Sample data for two series
 
-    // Set up the SVG container
-    const margin = { top: 20, right: 20, bottom: 40, left: 40 };
-    const width = 600 - margin.left - margin.right;
-    const height = 400 - margin.top - margin.bottom;
 
-    // Create scales for x and y axes
-    const xScale = d3.scaleLinear()
-      .domain([0, d3.max(data1, d => d.x)])
-      .range([0, width]);
+  
+useEffect(() => {
+  // Chart dimensions and margins
+  const width = 600;
+  const height = 400;
+  const margin = { top: 30, right: 50, bottom: 50, left: 70 };
 
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max([...data1, ...data2], d => d.y)])
-      .range([height, 0]);
+  // Data
+  const labels = ["19-02-2023", "20-02-2023", "21-02-2023", "22-02-2023", "23-02-2023", "24-02-2023", "25-02-2023"];
+  const line1Data = [182, 119, 75, 69, 94, 136, 392];
+  const line2Data = [182, 119, 75, 69, 45, 69, 392];
 
-    // Create lines for both data series
-    const line1 = d3.line()
-      .x(d => xScale(d.x))
-      .y(d => yScale(d.y));
+  // Create SVG element
+  const svg = d3
+    .select(chartRef.current)
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height);
 
-    const line2 = d3.line()
-      .x(d => xScale(d.x))
-      .y(d => yScale(d.y));
+  // Create scales
+  const xScale = d3
+    .scalePoint()
+    .domain([0, ...labels])
+    .range([margin.left, width - margin.right]);
 
-    // Create the SVG container within the useEffect
-    const svg = d3.select(svgRef.current);
+  const yScale = d3
+    .scaleLinear()
+    .domain([0, 500])
+    .nice()
+    .range([height - margin.bottom, margin.top]);
 
-    // Append paths for the lines to the plot
-    svg.append("path")
-      .data([data1])
-      .attr("class", "line")
-      .attr("d", line1)
-      .style("fill", "none")
-      .style("stroke", "skyblue")
-      .style("stroke-width", 2);
+  // Create x-axis
+  const xAxis = d3.axisBottom(xScale)
+    .tickValues([0, ...labels]);
+  svg
+    .append("g")
+    .attr("class", "x-axis")
+    .attr("transform", `translate(0, ${height - margin.bottom})`)
+    .call(xAxis);
 
-    svg.append("path")
-      .data([data2])
-      .attr("class", "line")
-      .attr("d", line2)
-      .style("fill", "none")
-      .style("stroke", "lightgreen")
-      .style("stroke-width", 2);
+  // Create y-axis
+  const yAxis = d3.axisLeft(yScale)
+    .tickValues(d3.range(0, 501, 100)); // Set tick values at intervals of 100
+  svg
+    .append("g")
+    .attr("class", "y-axis")
+    .attr("transform", `translate(${margin.left}, 0)`)
+    .call(yAxis);
 
-    // Append circles as point marks
-    svg.selectAll(".point")
-      .data([...data1, ...data2])
-      .enter()
-      .append("circle")
-      .attr("class", "point")
-      .attr("cx", d => xScale(d.x))
-      .attr("cy", d => yScale(d.y))
-      .attr("r", 4) // Radius of the circle
-      .style("fill", "green"); // Color of the circles
+  // Create lines
+  const lineGenerator = d3.line()
+    .x((d, i) => xScale(labels[i]))
+    .y((d) => yScale(d))
+    .curve(d3.curveLinear);
 
-    // Create x-axis with tick marks and labels only
-    svg.append("g")
-      .attr("class", "x-axis")
-      .attr("transform", `translate(0, ${height})`)
-      .call(d3.axisBottom(xScale).ticks(5)); // Adjust the number of ticks as needed
+  svg
+    .append("path")
+    .datum(line1Data)
+    .attr("class", "line1")
+    .attr("fill", "none")
+    .attr("stroke", "rgba(54, 162, 235, 0.6)")
+    .attr("stroke-width", 2)
+    .attr("d", lineGenerator);
 
-    // Create y-axis with tick marks and labels only
-    // Adjust the number of ticks as needed
-  }, []);
+  svg
+    .append("path")
+    .datum(line2Data)
+    .attr("class", "line2")
+    .attr("fill", "none")
+    .attr("stroke", "green")
+    .attr("stroke-width", 2)
+    .attr("d", lineGenerator);
+
+  // Create data points
+  svg
+    .selectAll(".point")
+    .data(line1Data)
+    .enter()
+    .append("circle")
+    .attr("class", "point")
+    .attr("cx", (d, i) => xScale(labels[i]))
+    .attr("cy", (d) => yScale(d))
+    .attr("r", 5)
+    .style("fill", "rgba(54, 162, 235, 0.6)");
+
+  svg
+    .selectAll(".point")
+    .data(line2Data)
+    .enter()
+    .append("circle")
+    .attr("class", "point")
+    .attr("cx", (d, i) => xScale(labels[i]))
+    .attr("cy", (d) => yScale(d))
+    .attr("r", 5)
+    .style("fill", "rgba(255, 99, 132, 0.6)");
+
+}, []);
+
+const [currentPage, setCurrentPage] = useState(1);
+const [itemsPerPage, setItemsPerPage] = useState(10);
+const [searchTerm, setSearchTerm] = useState('');
+
+const indexOfLastItem = currentPage * itemsPerPage;
+const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+const filterData = (data, searchTerm) => {
+  return data.filter((item) =>
+    item && item.vehicleNo && item.vehicleNo.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+};
+
+const filteredData = filterData(data, searchTerm);
+const currentItems = filteredData.slice(indexOfFirstItem, indexOfLastItem);
+
+const handlePageChange = (pageNumber) => {
+  setCurrentPage(pageNumber);
+};
+
+const handleItemsPerPageChange = (e) => {
+  const selectedItemsPerPage = parseInt(e.target.value, 10);
+  setItemsPerPage(selectedItemsPerPage);
+  setCurrentPage(1);
+};
+
+const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+
+const renderPaginationButtons = () => {
+  const buttons = [];
+  const maxButtonsToShow = 5; // Maximum number of page buttons to show
+
+  if (totalPages <= maxButtonsToShow) {
+    // If there are less than or equal to maxButtonsToShow pages, show all buttons
+    for (let i = 1; i <= totalPages; i++) {
+      buttons.push(
+        <button
+          key={i}
+          className={i === currentPage ? 'active' : ''}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+  } else {
+    // Otherwise, show a range of buttons with ellipsis
+    const halfMaxButtonsToShow = Math.floor(maxButtonsToShow / 2);
+    const firstButton = Math.max(currentPage - halfMaxButtonsToShow, 1);
+    const lastButton = Math.min(
+      currentPage + halfMaxButtonsToShow,
+      totalPages
+    );
+
+    if (currentPage - halfMaxButtonsToShow > 1) {
+      buttons.push(
+        <button
+          key="first"
+          className={1 === currentPage ? 'active' : ''}
+          onClick={() => handlePageChange(1)}
+        >
+          1
+        </button>
+      );
+      if (currentPage - halfMaxButtonsToShow > 2) {
+        buttons.push(<span key="ellipsis1">...</span>);
+      }
+    }
+
+    for (let i = firstButton; i <= lastButton; i++) {
+      buttons.push(
+        <button
+          key={i}
+          className={i === currentPage ? 'active' : ''}
+          onClick={() => handlePageChange(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    if (currentPage + halfMaxButtonsToShow < totalPages) {
+      if (currentPage + halfMaxButtonsToShow < totalPages - 1) {
+        buttons.push(<span key="ellipsis2">...</span>);
+      }
+      buttons.push(
+        <button
+          key="last"
+          className={totalPages === currentPage ? 'active' : ''}
+          onClick={() => handlePageChange(totalPages)}
+        >
+          {totalPages}
+        </button>
+      );
+    }
+  }
+
+  return buttons;
+};
 
   return (
     <div className="sub-dash-emergency">
@@ -266,7 +386,7 @@ const SubDashEmegencyAlert = () => {
             onChange={(e) => setResponseStatus(e.target.value)}
           />
         </div>
-        <div>
+        <div className='emergency-input'>
           <label htmlFor="dateTimeFrom">(Date and Time) From:</label>
           <input
             type="text"
@@ -276,7 +396,7 @@ const SubDashEmegencyAlert = () => {
             onChange={(e) => setDateTimeFrom(e.target.value)}
           />
         </div>
-        <div>
+        <div className='emergency-input'>
           <label htmlFor="dateTimeTo"> To:</label>
           <input
             type="text"
@@ -323,8 +443,8 @@ const SubDashEmegencyAlert = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
-              <tr key={index}>
+          {data.map((item, index) => (
+    <tr key={item.signalId}>
                 <td>{item.signalId}</td>
                 <td>{item.vehicleNo}</td>
                 <td>{item.mobileNo}</td>
@@ -342,29 +462,33 @@ const SubDashEmegencyAlert = () => {
       </div>
       <div className='emergency-data'>
         <div className="scatter-plot">
-          <svg width="600" height="400" ref={svgRef}></svg>
+          <svg width="600" height="400" ref={chartRef}></svg>
         </div>
         <div className="table-list">
           <div className='excel-emergency'>
             <h3>Total Emergency Alert Vehicle wise details</h3>
-            <button >
+            <button className='download-btn-container'>
               Export to excel <SiMicrosoftexcel />
             </button>
           </div>
-          <div className="search-bar">
-            <div className="left-side-bar">
+          <div className="emergency-search">
+            <div className="left-side-bars">
               <label>Show </label>
-              <select>
-                <option>5</option>
+              <select onChange={handleItemsPerPageChange} value={itemsPerPage}>
                 <option>10</option>
-                <option>25</option>
-                <option>50</option>
-                <option>100</option>
+                <option>20</option>
+                <option>30</option>
+
               </select>
               <label>enteries</label>
             </div>
-            <div className="right-side-bar">
-              <input type="text" placeholder="Search..." />
+            <div className="right-side-bars">
+            <input
+              type="text"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
             </div>
           </div>
           <table id="customers">
@@ -438,6 +562,7 @@ const SubDashEmegencyAlert = () => {
               <td>174748857</td>
               <td>PNVE</td>
               <td>7678745534</td>
+              <td>10</td>
 
             </tr>
             <tr>
@@ -454,6 +579,7 @@ const SubDashEmegencyAlert = () => {
               <td>174748857</td>
               <td>PNVE</td>
               <td>7678745534</td>
+              <td>10</td>
 
             </tr>
             <tr>
@@ -466,11 +592,42 @@ const SubDashEmegencyAlert = () => {
 
             </tr>
           </table>
+          <div className="combined-container">
+       
+        <div className="entries-info">
+          Showing {indexOfFirstItem + 1} to{' '}
+          {Math.min(indexOfLastItem, filteredData.length)} out of{' '}
+          {filteredData.length} entries
+        </div>
+        <div className="pagination">
+          {currentPage > 1 ? (
+            <button
+              className="prev-btn"
+              onClick={() => handlePageChange(currentPage - 1)}
+            >
+              Previous
+            </button>
+          ) : (
+            <button className="prev-btn" disabled>
+              Previous
+            </button>
+          )}
+          {renderPaginationButtons()}
+          {currentPage < totalPages && (
+            <button
+              className="next-btn"
+              onClick={() => handlePageChange(currentPage + 1)}
+            >
+              Next
+            </button>
+          )}
+        </div>
+       </div>
         </div>
       </div>
-    <MAPLayout/>
+      <MAPLayout />
     </div>
   );
 }
 
-export default SubDashEmegencyAlert
+export default SubDashEmergencyAlert
