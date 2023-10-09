@@ -8,6 +8,7 @@ export const Reports = () => {
     return (
             <div>
                 <div className="reports-menu">
+                    <h2>Alerts & Reports</h2><hr />
                     <ul>
                         <Link to={"/sub-dash-mini"}><li>Device Registration Dashboard</li></Link>
                         <Link to={"/sub-dash-emergency-alert"}><li>Emergency Alert Table</li></Link>
@@ -23,17 +24,17 @@ export const Reports = () => {
                 <div className="reports">
                     <div className="report-bar-container">
                         <div>
-                            <DonutChart/>
                             <p>Donut Chart</p>
+                            <DonutChart/>
                         </div>
                         <div>
-                        <PieChart/>
                         <p>Pie Chart</p>
+                        <PieChart/>
                         </div>
                     </div>
                     <div className="pie-chart">
-                        <BarChart/>
                         <p>Bar Chart</p>
+                        <BarChart/>
                     </div>
                 </div>
             </div>  
