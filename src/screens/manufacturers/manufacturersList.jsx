@@ -1,10 +1,10 @@
 import {useState, useEffect} from "react"
 import { Link } from "react-router-dom"
-import { getEntitiesByType } from "../../apis/entities"
 import {DynamicTable} from "../../components/table"
 import downloadExcel from '../../helpers/excel'
 import { generatePDF } from "../../helpers/pdf"
 import DetailModal from "../../components/DetailModal"
+import { getAllManufacturer } from "../../apis/manufacture"
 
 export const ManufacturerList = () => {
 
@@ -26,7 +26,7 @@ export const ManufacturerList = () => {
 
     useEffect(()=>{
         const fetchData = async () => {
-            const result = await getEntitiesByType("MNF")
+            const result = await getAllManufacturer()
             console.log(result, "MNF")
             setDistributorss(result)
         }
@@ -36,7 +36,7 @@ export const ManufacturerList = () => {
 
     // PDF Download Function
     const headers = ["Entity Name", "Entity Code", "Address", "Contact Name", "Contact No"];
-    const data = distributors.map(distributor => [distributor.entityName, distributor.entityCode, distributor.address, distributor.contactName, distributor.contactNo]);
+    const data = distributors.map(distributor => [distributor.entityName, distributor.entitycode, distributor.address, distributor.contactName, distributor.contactNo]);
 
     const handlePDFDownload = () => {
         generatePDF(headers, data,"Distributor List");
@@ -49,7 +49,7 @@ export const ManufacturerList = () => {
     const filteredDistributors = searchField
     ? distributors.filter((distribut) =>
         distribut.entityName.includes(searchField) ||
-        distribut.entityCode.includes(searchField) ||
+        distribut.entitycode.includes(searchField) ||
         distribut.address.includes(searchField) ||
         distribut.contactName.includes(searchField) ||
         distribut.contactNo.includes(searchField)
@@ -71,7 +71,7 @@ export const ManufacturerList = () => {
                 data={filteredDistributors}
                 datas={distributors} 
                 onDetailClick={handleModalOpen}
-                sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}
+                sequence={["entityName", "entitycode", "address", "contactName", "contactNo"]}
                 filter_required={true}
                 onSearchChange={handleSearchChange}
                 searchField={searchField}

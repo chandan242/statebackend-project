@@ -1,8 +1,8 @@
 import {useState, useEffect} from "react"
-import { getEntitiesByType } from "../../apis/entities"
 import {DynamicTable} from "../../components/table"
 import { generatePDF } from "../../helpers/pdf"
 import DetailModal from "../../components/DetailModal"
+import { getRTOList } from "../../apis/rto"
 
 export const RTOList = () => {
 
@@ -24,7 +24,7 @@ export const RTOList = () => {
 
     useEffect(()=>{
         const fetchData = async () => {
-            const result = await getEntitiesByType("RTO")
+            const result = await getRTOList()
             console.log(result, "RTO")
             setRTOs(result)
         }
@@ -35,7 +35,7 @@ export const RTOList = () => {
 
     // pdf download function
     const headers = ["Entity Name", "Entity Code", "Address", "Contact Name", "Contact No"];
-    const data = rtos.map(rto => [rto.entityName, rto.entityCode, rto.address, rto.contactName, rto.contactNo]);
+    const data = rtos.map(rto => [rto.entityName, rto.entitycode, rto.address, rto.contactName, rto.contactNo]);
 
     const handlePDFDownload = () => {
         generatePDF(headers, data,"RTO_list");
@@ -48,7 +48,7 @@ export const RTOList = () => {
     const filteredRTOs = searchField
     ? rtos.filter((rto) =>
           rto.entityName.includes(searchField) ||
-          rto.entityCode.includes(searchField) ||
+          rto.entitycode.includes(searchField) ||
           rto.address.includes(searchField) ||
           rto.contactName.includes(searchField) ||
           rto.contactNo.includes(searchField)
@@ -67,7 +67,7 @@ export const RTOList = () => {
             <div className="table-list">
                 <DynamicTable
                     data={filteredRTOs}
-                    sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}
+                    sequence={["entityName", "entitycode", "address", "contactName", "contactNo"]}
                     datas={rtos}
                     onDetailClick={handleModalOpen}
                     filter_required={true}

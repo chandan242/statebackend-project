@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { MultipleSelection } from "../../components/multipleSelection";
 import { UserPermissions } from "../../constants/permissions";
-import { addUserAPI } from "../../apis/users";
+import { addUserRTO } from "../../apis/rto";
 import { LoadingWidget } from "../../components/loading";
 import useFormValidation from "../../constants/Validation";
 import { useNavigate } from "react-router-dom";
@@ -32,8 +32,9 @@ export const AddUser = (props) => {
         designation: '',
         userName: '',
         emailId: '',
-        password:'',
-        confirmPassword:''
+        contactNo:'',
+        password:''
+        // confirmPassword:''
       };
   
       const validationRules = {
@@ -51,12 +52,15 @@ export const AddUser = (props) => {
         emailId: {
           required: true,
         },
+        contactNo: {
+          required: true,
+        },
         password: {
           required: true,
         },
-        confirmPassword: {
-          required: true,
-        },
+        // confirmPassword: {
+        //   required: true,
+        // },
       };
   
       const { data, errors,setErrors, onChange, validateForm } = useFormValidation(
@@ -65,26 +69,35 @@ export const AddUser = (props) => {
       );
 
     const handleSubmit = async (e) => {
-        
+      let parentId = localStorage.getItem('parentId')
+      let entityId = localStorage.getItem('entityId')
+      let role = localStorage.getItem('role')
+      let roletype = localStorage.getItem('roletype')
+      let userType = localStorage.getItem('userType')
+      let type = localStorage.getItem('type')
+      let status = localStorage.getItem('status')
         e.preventDefault();
         if (validateForm()) {
             setIsLoading(true)
             const uploadData = {...data}
 
-            uploadData["entityId"] = "3fa85f64-5717-4562-b3fc-2c963f66afa6"
-            uploadData["parentId"] = "ae5f5038-f387-487b-83fb-2221a20ee4ca"
+            uploadData["entityId"] = parseInt(entityId)
+            uploadData["parentId"] = parseInt(parentId)
             
-            uploadData["type"] = "A"
-            uploadData["userType"] = entityType
+            uploadData["type"] = parseInt(type)
+            uploadData["userType"] = userType
             
-            uploadData["createdBy"] = JSON.parse(localStorage.getItem("userObject"))["loginResp"]["id"]
+            uploadData["createdBy"] = 1
+            // uploadData["createdBy"] = JSON.parse(localStorage.getItem("userObject"))["loginResp"]["id"]
             uploadData["updateBy"] = uploadData["createdBy"]
             uploadData["createdOn"] = new Date()
             uploadData["updateOn"] = new Date()
-            uploadData["status"] = 1
-            uploadData["roleLists"] = selectedPermissions.map(item => ({"code": item["code"], "value":1}))
-            console.log("uploadData_roles", uploadData["roleLists"])    
-            const response = await addUserAPI(uploadData)
+            uploadData["status"] = parseInt(status)
+            uploadData["roletype"] = roletype
+            uploadData["role"] = parseInt(role)
+            uploadData["roleLists"] = selectedPermissions.map(item => ({"code": item["code"],"name":"Chandan", "value":1}))
+            console.log("uploadData_roles", uploadData)    
+            const response = await addUserRTO(uploadData)
             console.log(response, "user created")
             setIsLoading(false)
             navigate(`${trasfers}`);
@@ -118,8 +131,9 @@ export const AddUser = (props) => {
                         {formFieldUI("Email ID", "emailId", "text","*")}
                     </div>
                     <div className="form-rows">
+                        {formFieldUI("Contact No", "contactNo", "text","*")}
                         {formFieldUI("Password", "password", "text","*")}
-                        {formFieldUI("Confirm Password", "confirmPassword", "text","*")}
+                        {/* {formFieldUI("Confirm Password", "confirmPassword", "text","*")} */}
                     </div>
                     <p className="form-identifire-para">Map Roles</p>
                     <div className="form-rows">

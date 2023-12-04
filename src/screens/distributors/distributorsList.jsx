@@ -4,6 +4,7 @@ import { getEntitiesByType } from "../../apis/entities"
 import {DynamicTable} from "../../components/table"
 import { generatePDF } from "../../helpers/pdf"
 import DetailModal from "../../components/DetailModal"
+import { getAllDistributor } from "../../apis/distributor"
 
 export const DistributorList = () => {
 
@@ -25,7 +26,7 @@ export const DistributorList = () => {
 
     useEffect(()=>{
         const fetchData = async () => {
-            const result = await getEntitiesByType("DST")
+            const result = await getAllDistributor()
             console.log(result, "DST")
             setDistributorss(result)
         }
@@ -35,7 +36,7 @@ export const DistributorList = () => {
     },[])
 
     const headers = ["Entity Name", "Entity Code", "Address", "Contact Name", "Contact No"];
-    const data = distributors.map(distributor => [distributor.entityName, distributor.entityCode, distributor.address, distributor.contactName, distributor.contactNo]);
+    const data = distributors.map(distributor => [distributor.entityName, distributor.entitycode, distributor.address, distributor.contactName, distributor.contactNo]);
 
     const handlePDFDownload = () => {
         generatePDF(headers, data,"Distributors List");
@@ -48,7 +49,7 @@ export const DistributorList = () => {
     const filteredDistributors = searchField
     ? distributors.filter((distribut) =>
         distribut.entityName.includes(searchField) ||
-        distribut.entityCode.includes(searchField) ||
+        distribut.entitycode.includes(searchField) ||
         distribut.address.includes(searchField) ||
         distribut.contactName.includes(searchField) ||
         distribut.contactNo.includes(searchField)
@@ -70,7 +71,7 @@ export const DistributorList = () => {
             datas={distributors}
             data={filteredDistributors}
             onDetailClick={handleModalOpen}
-            sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}
+            sequence={["entityName", "entitycode", "address", "contactName", "contactNo"]}
             filter_required={true}
             onSearchChange={handleSearchChange}
             searchField={searchField}

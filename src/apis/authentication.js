@@ -10,7 +10,7 @@ export const login = async (username,password) => {
             password: password,
         }),
     };
-    const response = await fetch(`${BaseURL}/UserRoles/userlogin`, requestOptions)
+    const response = await fetch(`${BaseURL}/UserLogin/userlogin`, requestOptions)
     console.log(response);
     const responseParsed = await response.json()
     
@@ -28,5 +28,11 @@ export const logout = async () => {
     localStorage.setItem('token', "")
     localStorage.setItem('id', "")
     localStorage.setItem("userObject", "");
+    localStorage.setItem("entityId", "");
+    localStorage.setItem("type", "");
+    localStorage.setItem("userType", "");
+    localStorage.setItem("status", "");
+    localStorage.setItem("roletype", "");
+    localStorage.setItem("role", "");
     window.location = '/';       
 }

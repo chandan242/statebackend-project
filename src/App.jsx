@@ -14,7 +14,31 @@ function App() {
   const dispatch = useDispatch()
   const userDetails = useContext(UserContext);
   console.log("User Context Data", userDetails);
-
+  let parentId;
+  let entityId;
+  let role;
+  let roletype;
+  let userType;
+  let type;
+  let status;
+  (userDetails && (
+    parentId = userDetails.parentId,
+    entityId = userDetails.entityId,
+    role = userDetails.role,
+    roletype = userDetails.roletype,
+    userType = userDetails.userType,
+    type = userDetails.type,
+    status = userDetails.status,
+    localStorage.setItem("parentId",parseInt(parentId)),
+    localStorage.setItem("entityId",parseInt(entityId)),
+    localStorage.setItem("role",parseInt(role)),
+    localStorage.setItem("roletype", roletype),
+    localStorage.setItem("userType",JSON.stringify(userType)),
+    localStorage.setItem("type",parseInt(type)),
+    localStorage.setItem("status",parseInt(status))
+  ))
+  // userDetails?localStorage.setItem("parentId",parentId):localStorage.setItem("parentId",null)
+  // console.log(parentId);
   return (
     <>
       {userDetails ? (

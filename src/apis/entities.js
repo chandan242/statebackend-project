@@ -1,6 +1,5 @@
 import {BaseURL} from '../constants/baseURL'
 
-
 export const addentity = async (data) =>{
     let token = localStorage.getItem("token");
 

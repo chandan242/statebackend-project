@@ -32,7 +32,7 @@ export const LoginScreen = () => {
           onChange={(e) => onChange(e)}
         ></input>
 
-      </div>
+      </div>  
     );
   };
 

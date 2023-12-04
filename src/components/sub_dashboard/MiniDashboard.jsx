@@ -256,7 +256,6 @@ const MiniDashboard = () => {
       .attr('y', 20)
       .text('Activated device');
 
-
     return () => {
       d3.select(barRef.current).selectAll('*').remove();
     };

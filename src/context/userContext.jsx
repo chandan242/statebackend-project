@@ -7,6 +7,7 @@ export const  UserProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
 
   const user = (localStorage.getItem('userObject') && JSON.parse(localStorage.getItem('userObject'))["loginResp"]) || null
+  
 
   useEffect(()=>{
     if (user!==null){

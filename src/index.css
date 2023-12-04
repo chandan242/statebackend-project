@@ -59,6 +59,7 @@ body {
 @media only screen and (max-width : 1100px) {
 
 }
+
 @media only screen and (max-width : 1027px) {
   .sub-nav-item{
     margin: 0;
@@ -78,8 +79,6 @@ body {
     align-items: center;
   }
 }
-
-
 
 /* Login SCreen CSS */
 .login-container{
@@ -265,7 +264,23 @@ body {
   font-size: 16px;
   color: rgb(67, 66, 66);
 }
-.form-inputs{
+.select-groups{
+  outline: none;
+  display: block;
+  width: 60%;
+  padding: 0.475rem 0.75rem;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.form-inputs {
   outline: none;
   display: block;
   width: 100%;

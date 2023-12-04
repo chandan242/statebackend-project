@@ -131,8 +131,9 @@ const useFormValidation = (initialData, validationRules) => {
     for (const fieldName in validationRules) {
       const value = data[fieldName];
       const rules = validationRules[fieldName];
+      const isValueString = typeof value === 'string';
 
-      if (rules.required && (!value || value.trim() === "")) {
+      if (rules.required && (!value || (isValueString && value.trim() === ""))) {
         newErrors[fieldName] = "Field is required";
         hasErrors = true;
       } else if (rules.minLength && value.length < rules.minLength) {
