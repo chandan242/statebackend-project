@@ -18,6 +18,7 @@ export const AddDistributor = () => {
   const [isFileUploading1, setIsFileUploading1] = useState(false);
   const [isFileUploading2, setIsFileUploading2] = useState(false);
   const [isFileUploading3, setIsFileUploading3] = useState(false);
+  const [userId, setUserId] = useState(0);
   // const onChange = (e) => {
   //     const data_new = {...data}
   //     data_new[e.target.name] = e.target.value
@@ -230,6 +231,7 @@ export const AddDistributor = () => {
       };
       console.log("uploadData", uploadData);
       const response = await createDistributor(uploadData);
+      setUserId(response.dstid)
       console.log(response);
       setUserAddition(true);
       setIsLoading(false);
@@ -342,7 +344,8 @@ export const AddDistributor = () => {
       <div className="form-container">
         {userAddition ? (
           <AddUser
-            entityType="DST"
+            userType="Distributor"
+            userId = {userId}
             navigateto={"/distributors/listDistributor"}
           />
         ) : isLoading ? (

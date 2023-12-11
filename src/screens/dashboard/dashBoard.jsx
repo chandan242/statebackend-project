@@ -25,7 +25,6 @@ export const DashBoard = (props) => {
 
   }, []);
   
-
   return (
     <div className={navigationOpen ? "map-container-shrink" : "map-container-expand"}>
       <MultiCardWidgets/>

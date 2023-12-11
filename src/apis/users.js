@@ -48,9 +48,30 @@ import axios from "axios";
 export const getUserRoles = async () => {
   try {
     let token = localStorage.getItem("token");
-    let id = localStorage.getItem('id')
+    let id = localStorage.getItem('userid')
+    let type;
+    let userTypes = localStorage.getItem("type")
+    console.log(userTypes);
+    if(userTypes==="2"){
+      type = "SBU";
+    }
+    else if(userTypes==="3"){
+      type = "RTO";
+    }
+    else if(userTypes==="4"){
+      type = "Manufacturer";
+    }
+    else if(userTypes==="5"){
+      type === "Distributor";
+    }
+    else {
+      type = "SUP";
+    }
+    console.log(type);
+    
+    let url = `http://www.thexyz.biz:8087/api/${type}/getrole?userid=${id}`
     const response = await axios.get(
-      `http://www.thexyz.biz:8087/api/UserRoles/getuserrole?userid=${id}`,
+      url,
       {
         headers: {
           Authorization: `Bearer ${token}`,

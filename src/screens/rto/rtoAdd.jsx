@@ -8,6 +8,8 @@ import usePincodeFetch from "../../constants/usePincodeFetch";
 export const AddRTO = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [userAddition, setUserAddition] = useState(false);
+  const [userId, setUserId] = useState(0);
+  // let userId;
 
   const initialData = {
     rtoName: "",
@@ -87,7 +89,9 @@ export const AddRTO = () => {
         parentId: parseInt(parentId),
       };
       const response = await createRTO(uploadData);
-      console.log(response);
+      setUserId(response.rtoid)
+      // userId = response.rtoid;
+      console.log("ieufiefheifhei",response.entityName);
       setUserAddition(true);
       setIsLoading(false);
     } else {
@@ -96,6 +100,7 @@ export const AddRTO = () => {
       }, 5000);
     }
   };
+  console.log("ecefwuuue",userId);
 
   const formFieldUI = (label, name, type, star) => {
     return (
@@ -131,7 +136,7 @@ export const AddRTO = () => {
       <hr />
       <div className="form-container">
         {userAddition ? (
-          <AddUser entityType="RTO" navigateto={"/rtos/listRTO"} />
+          <AddUser userType="RTO" userId = {userId} navigateto={"/rtos/listRTO"} />
         ) : isLoading ? (
           <LoadingWidget />
         ) : (

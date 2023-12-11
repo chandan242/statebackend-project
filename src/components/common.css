@@ -306,3 +306,39 @@ table th, table td{
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+.user-create-btn{
+  padding: 5px 10px;
+  margin: 0 5px;
+  cursor: pointer;
+  border: none;
+  background: #0651a0;
+  color: #fff;
+  border-radius: 5px
+}
+
+/* Multiple-Selection */
+/* .cont{
+  display: flex;
+  align-items: center;
+} */
+.roles-slection-container{ 
+  display: flex;
+  align-items: center;
+}
+
+.roles-selection-checkbox {
+  display: flex;
+  gap: 20px;
+}
+
+.roles-slection-checkbo{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.roles-slection-label{
+  font-size: 18px;
+  color: rgb(48, 48, 48);
+}

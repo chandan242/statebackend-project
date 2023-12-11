@@ -35,8 +35,8 @@ export const ManufacturerList = () => {
     },[])
 
     // PDF Download Function
-    const headers = ["Entity Name", "Entity Code", "Address", "Contact Name", "Contact No"];
-    const data = distributors.map(distributor => [distributor.entityName, distributor.entitycode, distributor.address, distributor.contactName, distributor.contactNo]);
+    const headers = ["Entity Name", "Entity Code", "Address", "District", "PinCode"];
+    const data = distributors.map(distributor => [distributor.entityName, distributor.entitycode, distributor.address, distributor.district, distributor.pinCode]);
 
     const handlePDFDownload = () => {
         generatePDF(headers, data,"Distributor List");
@@ -51,8 +51,8 @@ export const ManufacturerList = () => {
         distribut.entityName.includes(searchField) ||
         distribut.entitycode.includes(searchField) ||
         distribut.address.includes(searchField) ||
-        distribut.contactName.includes(searchField) ||
-        distribut.contactNo.includes(searchField)
+        distribut.district.includes(searchField) 
+        // distribut.contactNo.includes(searchField)
         )
     : distributors;
 
@@ -71,13 +71,15 @@ export const ManufacturerList = () => {
                 data={filteredDistributors}
                 datas={distributors} 
                 onDetailClick={handleModalOpen}
-                sequence={["entityName", "entitycode", "address", "contactName", "contactNo"]}
+                sequence={["entityName", "entitycode", "address", "district", "pinCode"]}
                 filter_required={true}
                 onSearchChange={handleSearchChange}
                 searchField={searchField}
                 isPdfDownloadBtnVisible={true}
                 isExcelDownloadBtnVisible={true}
                 onPDFDownload={handlePDFDownload} 
+                userType = "Manufacturer"
+                navigateto={"/manufacturers/listManufacturer"}
             />
             <DetailModal isOpen={isModalOpen} onClose={handleModalClose} data={selectedRTO} />
         </div>

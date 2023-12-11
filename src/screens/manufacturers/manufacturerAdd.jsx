@@ -15,6 +15,7 @@ export const AddManufacturer = () => {
     document2: { doctype: "", docname: "" },
     document3: { doctype: "", docname: "" },
   });
+  const [userId, setUserId] = useState(0);
 
   const [isFileUploading1, setIsFileUploading1] = useState(false);
   const [isFileUploading2, setIsFileUploading2] = useState(false);
@@ -228,6 +229,7 @@ export const AddManufacturer = () => {
       };
       // console.log("uploadData", uploadData);
       const response = await createManufacture(uploadData);
+      setUserId(response.mnfid)
       setUserAddition(true);
       setIsLoading(false);
     } else {
@@ -236,6 +238,7 @@ export const AddManufacturer = () => {
       }, 5000);
     }
   };
+  console.log("userId",userId);
 
   const formFieldUI = (label, name, type, star) => {
     return (
@@ -340,8 +343,9 @@ export const AddManufacturer = () => {
       <div className="form-container">
         {userAddition ? (
           <AddUser
-            entityType="MNF"
+          userType="Manufacturer"
             navigateto={"/manufacturers/listManufacturer"}
+            userId = {userId}
           />
         ) : isLoading ? (
           <LoadingWidget />

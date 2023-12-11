@@ -26,16 +26,16 @@ export const RTOList = () => {
         const fetchData = async () => {
             const result = await getRTOList()
             console.log(result, "RTO")
-            setRTOs(result)
+            setRTOs(result)    
         }
-    
+        
         fetchData()
 
     },[])
 
     // pdf download function
-    const headers = ["Entity Name", "Entity Code", "Address", "Contact Name", "Contact No"];
-    const data = rtos.map(rto => [rto.entityName, rto.entitycode, rto.address, rto.contactName, rto.contactNo]);
+    const headers = ["Entity Name", "Entity Code", "Address", "District", "PinCode"];
+    const data = rtos.map(rto => [rto.entityName, rto.entitycode, rto.address, rto.district, rto.pinCode]);
 
     const handlePDFDownload = () => {
         generatePDF(headers, data,"RTO_list");
@@ -50,8 +50,8 @@ export const RTOList = () => {
           rto.entityName.includes(searchField) ||
           rto.entitycode.includes(searchField) ||
           rto.address.includes(searchField) ||
-          rto.contactName.includes(searchField) ||
-          rto.contactNo.includes(searchField)
+          rto.district.includes(searchField) 
+        //   rto.pinCode.includes(searchField)
       )
     : rtos;
 
@@ -67,7 +67,7 @@ export const RTOList = () => {
             <div className="table-list">
                 <DynamicTable
                     data={filteredRTOs}
-                    sequence={["entityName", "entitycode", "address", "contactName", "contactNo"]}
+                    sequence={["entityName", "entitycode", "address", "district", "pinCode"]}
                     datas={rtos}
                     onDetailClick={handleModalOpen}
                     filter_required={true}
@@ -75,7 +75,9 @@ export const RTOList = () => {
                     searchField={searchField}
                     isPdfDownloadBtnVisible={true}
                     isExcelDownloadBtnVisible={true}
-                    onPDFDownload={handlePDFDownload}  
+                    onPDFDownload={handlePDFDownload}
+                    userType="RTO"  
+                    navigateto={"/rtos/listRTO"}
                 />
                 <DetailModal isOpen={isModalOpen} onClose={handleModalClose} data={selectedRTO} />
 

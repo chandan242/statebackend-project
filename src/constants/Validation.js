@@ -13,9 +13,9 @@ export const validateUsername = (username) => {
     //   errors.push("Username cannot be longer than 10 characters");
     // }
   
-    if (username && !/^[a-zA-Z]+$/.test(username)) {
-      errors.push("Username must contain only letters");
-    }
+    // if (username && !/^[a-zA-Z]+$/.test(username)) {
+    //   errors.push("Username must contain only letters");
+    // }
   
     return errors.length > 0 ? errors : null;
   }
