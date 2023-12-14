@@ -4,29 +4,31 @@ import { getEntitiesByType } from "../../apis/entities"
 import {DynamicTable} from "../../components/table"
 import { generatePDF } from "../../helpers/pdf"
 import DetailModal from "../../components/DetailModal"
+import { getApprovingAuthority } from "../../apis/masters"
+import { Table } from "../../components/DynamicTable"
 
 
 export const ApprovingAuthorityList = () => {
 
     const [approvingAuthority, setApprovingAuthority] = useState([])
-    const [selectedRTO, setSelectedRTO] = useState(null);
+    const [selectedApprovingAuthority, setSelectedApprovingAuthority] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchField, setSearchField] = useState("");
 
     // Modal open and close function 
-    const handleModalOpen = (rto) => {
-        setSelectedRTO(rto);
-        setIsModalOpen(true);
+        const handleModalOpen = (item) => {
+            setSelectedApprovingAuthority(item);
+            setIsModalOpen(true);
         };
     
         const handleModalClose = () => {
-        setSelectedRTO(null);
-        setIsModalOpen(false);
+            setSelectedApprovingAuthority(null);
+            setIsModalOpen(false);
         };
 
     useEffect(()=>{
         const fetchData = async () => {
-            const result = await getEntitiesByType("AUT")
+            const result = await getApprovingAuthority()
             console.log(result, "AUT")
             setApprovingAuthority(result)
         }
@@ -66,9 +68,9 @@ export const ApprovingAuthorityList = () => {
                 </div> */}
             </div>
             <div className="table-list">
-                <DynamicTable 
+                <Table 
                     data={filteredapprovingAuthority} 
-                    sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}
+                    sequence={["authId", "authName", "authAddress", "pocName", "pocPhone"]}
                     datas={approvingAuthority}
                     onDetailClick={handleModalOpen}
                     filter_required={true}
@@ -78,7 +80,7 @@ export const ApprovingAuthorityList = () => {
                     isExcelDownloadBtnVisible={true}
                     onPDFDownload={handlePDFDownload}
                 />
-                <DetailModal isOpen={isModalOpen} onClose={handleModalClose} data={selectedRTO} />
+                <DetailModal isOpen={isModalOpen} onClose={handleModalClose} data={selectedApprovingAuthority} />
             </div>
         </div>
     )

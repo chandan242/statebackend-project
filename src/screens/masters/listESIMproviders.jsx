@@ -3,32 +3,33 @@ import { getEntitiesByType } from "../../apis/entities"
 import {DynamicTable} from "../../components/table"
 import { generatePDF } from "../../helpers/pdf"
 import DetailModal from "../../components/DetailModal"
+import { getEsimAllProvider } from "../../apis/masters"
+import { Table } from "../../components/DynamicTable"
 
 export const ESIMProviderList = () => {
 
     const [esimProviders, setESIMProviders] = useState([])
-    const [selectedRTO, setSelectedRTO] = useState(null);
+    const [selectedESIM, setSelectedESIM] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchField, setSearchField] = useState("");
 
     // Modal open and close function 
-    const handleModalOpen = (rto) => {
-        setSelectedRTO(rto);
+    const handleModalOpen = (item) => {
+        setSelectedESIM(item);
         setIsModalOpen(true);
         };
     
         const handleModalClose = () => {
-        setSelectedRTO(null);
+        setSelectedESIM(null);
         setIsModalOpen(false);
         };
 
     useEffect(()=>{
         const fetchData = async () => {
-            const result = await getEntitiesByType("ESM")
+            const result = await getEsimAllProvider()
             console.log(result, "ESM")
             setESIMProviders(result)
         }
-    
         fetchData()
 
     },[])
@@ -65,9 +66,9 @@ export const ESIMProviderList = () => {
                 </div> */}
             </div>
         <div className="table-list">
-            <DynamicTable 
+            <Table 
                 data={filteredesimProviders} 
-                sequence={["entityName", "entityCode", "address", "contactName", "contactNo"]}
+                sequence={["providerName", "providerCode", "address", "pocName", "pocPhone"]}
                 datas={esimProviders}
                 onDetailClick={handleModalOpen}
                 filter_required={true}
@@ -77,7 +78,7 @@ export const ESIMProviderList = () => {
                 isExcelDownloadBtnVisible={true}
                 onPDFDownload={handlePDFDownload}
             />
-            <DetailModal isOpen={isModalOpen} onClose={handleModalClose} data={selectedRTO} />
+            <DetailModal isOpen={isModalOpen} onClose={handleModalClose} data={selectedESIM} />
         </div>
         </div>
     )

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import { addentity } from "../../apis/entities";
 import { LoadingWidget } from "../../components/loading";
-import { uploadDoc } from "../../apis/uploadFiles";
 import useFormValidation from "../../constants/Validation";
 import usePincodeFetch from "../../constants/usePincodeFetch";
-import { createESIM, uploadDocESIM } from "../../apis/esim";
+import { createESIM, uploadDocESIM } from "../../apis/masters";
 import FileUploadLoading from "../../components/FileLoader";
+import { useNavigate } from "react-router-dom";
 
 export const AddESIMProviders = () => {
   // const [data, setData] = useState({})
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [uploadedFiles, setUploadedFiles] = useState({
     document1: { doctype: "", docname: "" },
@@ -247,6 +247,7 @@ export const AddESIMProviders = () => {
 
       console.log("uploadData", uploadData);
       const response = await createESIM(uploadData);
+      navigate("/masters/listESIMProviders");
       console.log("response", response);
       setIsLoading(false);
     } else {

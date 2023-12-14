@@ -3,9 +3,11 @@ import { addentity } from "../../apis/entities";
 import { LoadingWidget } from "../../components/loading";
 import useFormValidation from "../../constants/Validation";
 import usePincodeFetch from "../../constants/usePincodeFetch";
+import { createApprovingAuthority } from "../../apis/masters";
+import { useNavigate } from "react-router-dom";
 
 export const AddApprovingAuthority = () => {
-
+    const navigate = useNavigate();
     // const [data, setData] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     
@@ -14,54 +16,52 @@ export const AddApprovingAuthority = () => {
     //     data_new[e.target.name] = e.target.value
     //     setData(data_new)
     // }
+    const { districtOptions, stateOptions, pincodeLoading, pincodeError, fetchPincodeData } =
+    usePincodeFetch();
+
+    const handlePincodeChange = async (e) => {
+      const pincode = e.target.value;
+      const { district, state } = await fetchPincodeData(pincode);
+      onChange({ target: { name: 'district', value: district } });
+      onChange({ target: { name: 'state', value: state } });
+    };
 
     const initialData = {
-        entityCode: '',
-        entityName: '',
-        kycgstpan: '',
-        address:'',
-        district:'',
-        state:'',
-        pincode:'',
-        contactName:'',
-        emailId:'',
-        contactNo:''
+      authID: '',
+      authName: '',
+      authAddress:'',
+      authDistrict:'',
+      authPincode:'',
+      pocName:'',
+      pocEmail:'',
+      pocPhone:''
     };
   
       const validationRules = {
-        entityCode: {
+        authID: {
           required: true,
-          minLength: 3,
-          maxLength: 10,
-          pattern: /^[A-Za-z0-9]+$/,
         },
-        entityName: {
+        authName: {
           required: true,
           minLength: 5,
           maxLength: 50,
         },
-        kycgstpan: {
+        authAddress: {
           required: true,
         },
-        // address: {
-        //   required: true,
-        // },
-        district: {
+        authDistrict: {
           required: true,
         },
-        state: {
+        authPincode: {
           required: true,
         },
-        pincode: {
+        pocName: {
           required: true,
         },
-        contactName: {
+        pocEmail: {
           required: true,
         },
-        emailId: {
-          required: true,
-        },
-        contactNo: {
+        pocPhone: {
           required: true,
         },
       };
@@ -71,23 +71,24 @@ export const AddApprovingAuthority = () => {
         validationRules
       );
 
-      const { districtOptions, stateOptions, pincodeLoading, pincodeError, fetchPincodeData } =
-      usePincodeFetch();
-  
-    const handlePincodeChange = async (e) => {
-      const pincode = e.target.value;
-      const { district, state } = await fetchPincodeData(pincode);
-      onChange({ target: { name: 'district', value: district } });
-      onChange({ target: { name: 'state', value: state } });
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
+        let parentId = localStorage.getItem('parentId')
         if (validateForm()) {
             setIsLoading(true)
-            const uploadData = {...data}
-            uploadData["entityType"] = "AUT"
-            const response = await addentity(uploadData)
+            const uploadData = {
+              authID: data.authID,
+              authName: data.authName,
+              authAddress: data.authAddress,
+              authPincode: data.authPincode,
+              authDistrict: data.authDistrict,
+              pocName: data.pocName,
+              pocEmail: data.pocEmail,
+              pocPhone: data.pocPhone,
+              parentId: parseInt(parentId),
+            };
+            const response = await createApprovingAuthority(uploadData);
+            navigate("/masters/listApprovingAuthority")
             setIsLoading(false)
         }
         else{
@@ -113,24 +114,20 @@ export const AddApprovingAuthority = () => {
                 <div className = "form-tag">
                     <p className="form-identifire-para">Device Approving Authority Details</p>
                     <div className="form-rows">
-                        {formFieldUI("Authority Code", "entityCode", "text","*")}
-                        {formFieldUI("Authority Name", "entityName", "text","*")}
-                        {formFieldUI("KYC Identifier", "kycgstpan", "text","*")}
+                        {formFieldUI("Authority Code", "authID", "text","*")}
+                        {formFieldUI("Authority Name", "authName", "text","*")}
                     </div>
                     <p className="form-identifire-para">Address Details</p>
                     <div className="form-rows">
-                        {formFieldUI("Address", "address", "text")}
-                        {formFieldUI("Pin Code", "pincode", "text","*")}
-                    </div>
-                    <div className="form-rows">
-                        {formFieldUI("District", "district", "text","*")}
-                        {formFieldUI("State", "state", "text","*")}
+                        {formFieldUI("Address", "authAddress", "text")}
+                        {formFieldUI("Pin Code", "authPincode", "text","*")}
+                        {formFieldUI("District", "authDistrict", "text","*")}
                     </div>
                     <p className="form-identifire-para">Contact details</p>
                     <div className="form-rows">
-                        {formFieldUI("Name", "contactName", "text","*")}
-                        {formFieldUI("Email", "emailId", "text","*")}
-                        {formFieldUI("Contact", "contactNo", "text","*")}      
+                        {formFieldUI("Name", "pocName", "text","*")}
+                        {formFieldUI("Email", "pocEmail", "text","*")}
+                        {formFieldUI("Contact", "pocPhone", "text","*")}      
                     </div>
                 </div>
 
