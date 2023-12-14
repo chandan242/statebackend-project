@@ -79,3 +79,27 @@ export const addUserDistributor = async (data) =>{
   console.log(responseParsed, "responseParsed")
   return responseParsed;
 }
+
+export const checkUserDistributor = async (username) => {
+  const url = `http://www.thexyz.biz:8087/api/Distributor/checkuser?UserName=${username}`;
+  let token = localStorage.getItem("token");
+  try {
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': '*/*',
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error('Request failed');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
+};

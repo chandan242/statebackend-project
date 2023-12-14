@@ -88,7 +88,7 @@ const Sidebar = ({navigationOpen}) => {
 
   else if(user === "RTO"){
     navigation_panel = [
-      { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
+      { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "addRTO" },
       ...userRoles.map((data,index) => ({
         baseRoute: `/${userCodes[index]}`,
         label: data,
@@ -99,7 +99,7 @@ const Sidebar = ({navigationOpen}) => {
   }
   else if(user === "SBU"){
     navigation_panel = [
-      { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
+      // { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
       ...userRoles.map((data,index) => ({
         baseRoute:`/${userCodes[index]}`,
         label: data,
@@ -110,7 +110,7 @@ const Sidebar = ({navigationOpen}) => {
  }
  else if(user === "MNF"){
   navigation_panel = [
-    { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
+    // { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
     ...userRoles.map((data,index) => ({
       baseRoute: `/${userCodes[index]}`,
       label: data,

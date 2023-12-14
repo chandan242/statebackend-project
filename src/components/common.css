@@ -317,6 +317,14 @@ table th, table td{
   color: #fff;
   border-radius: 5px
 }
+.available {
+  color: green;
+}
+
+.not-available {
+  color: red; 
+}
+
 
 /* Multiple-Selection */
 /* .cont{

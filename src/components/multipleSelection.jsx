@@ -114,19 +114,38 @@ export const MultipleSelection = ({ rolesWithValue1, rolesWithValue0, selectedRo
     }
   }, [rolesWithValue1, setSelectedRoles]);
 
+  // const handleRoleSelection = (e) => {
+  //   const roleName = e.target.name;
+  //   const isChecked = e.target.checked;
+
+  //   let updatedRoles = [];
+  //   if (isChecked) {
+  //     updatedRoles = [...selectedRoles, rolesWithValue0.find((role) => role.name === roleName)];
+  //   } else {
+  //     updatedRoles = selectedRoles.filter((role) => role.name !== roleName);
+  //   }
+
+  //   setSelectedRoles(updatedRoles);
+  // };
   const handleRoleSelection = (e) => {
     const roleName = e.target.name;
     const isChecked = e.target.checked;
-
+  
     let updatedRoles = [];
+  
     if (isChecked) {
-      updatedRoles = [...selectedRoles, rolesWithValue0.find((role) => role.name === roleName)];
+      const roleToToggle = rolesWithValue0.find((role) => role.name === roleName);
+      if (roleToToggle) {
+        roleToToggle.value = 1; // Change the value from 0 to 1
+        updatedRoles = [...selectedRoles, roleToToggle];
+      }
     } else {
       updatedRoles = selectedRoles.filter((role) => role.name !== roleName);
     }
-
+  
     setSelectedRoles(updatedRoles);
   };
+  
   console.log(selectedRoles);
 
   return (

@@ -61,7 +61,6 @@ export const addUserRTO = async (data) =>{
     return responseParsed;
 }
 
-
 export const checkUserRTO = async (username) => {
     const url = `http://www.thexyz.biz:8087/api/RTO/checkuser?UserName=${username}`;
     let token = localStorage.getItem("token");

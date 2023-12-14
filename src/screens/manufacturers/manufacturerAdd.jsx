@@ -85,21 +85,6 @@ export const AddManufacturer = () => {
     document3: {
       required: true,
     },
-    // contactName: {
-    //   required: true,
-    // },
-    // emailId: {
-    //   required: true,
-    // },
-    // contactNo: {
-    //   required: true,
-    // },
-    // registrationForm:{
-    //     required : true
-    // },
-    // kycDocuments:{
-    //     required : true
-    // }
   };
 
   const { data, errors, setErrors, onChange, validateForm } = useFormValidation(

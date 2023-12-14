@@ -47,13 +47,13 @@ body {
 }
 .sub-nav-text-active{
   text-decoration: none;
-  color: white;
-  /* color: rgb(0, 0, 0); */
-  /* background-color: white; */
+  /* color: white; */
+  color: rgb(55, 54, 54); 
+  background-color: white;
   list-style: none;
   padding: 10px 15px;
-  /* border-radius: 6px; */
-  border-bottom: 4px solid white;
+  border-radius: 6px;
+  /* border-bottom: 4px solid white; */
 }
 
 @media only screen and (max-width : 1100px) {
@@ -177,7 +177,7 @@ body {
   margin: 0;
   background-color: rgb(13, 58, 132);
   width: 220px;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   /* padding-top: 1rem; */
 }
 .sidebar-item-shrink{
@@ -309,7 +309,7 @@ body {
   background-color: rgb(27, 85, 177);
   /* background-image:linear-gradient(rgb(20, 64, 133), rgb(66, 118, 202), rgb(20, 64, 133)); */
   cursor: pointer;
-  width: 13%;
+  /* width: 13%; */
   font-size: 16px;
 }
 .form-submit-btn button:hover{
@@ -339,6 +339,7 @@ body {
   }
   .form-submit-btn button{
     /* margin-top: -10px; */
+    /* width: 13%; */
   }
 }
 
@@ -519,11 +520,19 @@ hr{
 }
 .sidebar-navigation-item-s p{
   display: none;
+  display: none;
   /* visibility: hidden; */
 }
 .sidebar-navigation-item-s p:hover{
   opacity: 1;
-  visibility: visible;
+  /* visibility: visible; */
+  display: block;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  white-space: nowrap;
 }
 .sidebar-navigation-item p {
   margin: 0;
@@ -1113,4 +1122,44 @@ sup{
 }
 .distributor-approval-table th:last-child, .distributor-approval-table td:last-child {
   padding-right: 20px;
+}
+
+/* ADD Inventory Component */
+
+.bulk-upload-container{
+  display: flex;
+  justify-content: space-around;
+  /* gap: 90px; */
+  /* margin: 20px; */
+}
+.bulk-upload-label{
+  font-size: 20px;
+}
+.form-row{
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  margin-bottom: 10px;
+}
+.form-label{
+  margin: 0;
+  font-size: 20px;
+  color: rgb(67, 66, 66);
+  font-weight: 600;
+}
+.form-input{
+    outline: none;
+    display: block;
+    width: fit-content;
+    padding: 0.475rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }

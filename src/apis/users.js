@@ -62,14 +62,15 @@ export const getUserRoles = async () => {
       type = "Manufacturer";
     }
     else if(userTypes==="5"){
-      type === "Distributor";
+      type = "Distributor";
     }
     else {
       type = "SUP";
     }
     console.log(type);
     
-    let url = `http://www.thexyz.biz:8087/api/${type}/getrole?userid=${id}`
+    let url = `http://www.thexyz.biz:8087/api/${type}/getuserrole?userid=${id}`
+    console.log(url);
     const response = await axios.get(
       url,
       {
