@@ -147,7 +147,7 @@ const router = createBrowserRouter([
         element: <Manufacturer />,
         children:[
           {path: "listManufacturer", element: <ManufacturerList />},
-          true? {path: "addManufacturer", element: <AddManufacturer />} : null
+          {path: "addManufacturer", element: <AddManufacturer />} 
         ]
       },
       {
@@ -235,6 +235,10 @@ const router = createBrowserRouter([
         element:<Add_Device/>
       },
       {
+        path:"distributor_details",
+        element:<DistributorList />
+      },
+      {
         path:"add_device_type",
         element:<Add_Device/>
       },
@@ -256,6 +260,10 @@ const router = createBrowserRouter([
       },
       {
         path:"rto_user_management",
+        element:<AddUser />
+      },
+      {
+        path:"rto_details",
         element:<Add_Device/>
       },
       {
@@ -280,8 +288,9 @@ const router = createBrowserRouter([
       },
       {
         path:"esim_provider_detail",
-        element:<Add_Device/>
+        element:<ESIMProviderList />
       },
+
       {
         path:"add_manufacturer",
         element:<Add_Device/>
@@ -293,6 +302,10 @@ const router = createBrowserRouter([
       {
         path:"manufacturer_user_management",
         element:<Add_Device/>
+      },
+      {
+        path:"manufacturer_details",
+        element:<ManufacturerList />
       },
     ]
   }

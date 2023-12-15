@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2'
+import  readXlsxFile  from 'read-excel-file';
 
 import { useState, useEffect } from 'react';
 import useFormValidation from '../../constants/Validation';
@@ -54,6 +55,7 @@ export const AddDeviceInventory = () => {
         if (bulkData) {
             setIsLoading(true);
             //bulk upload api here implement
+
             setIsLoading(false);
             await Swal.fire({
                 icon: 'success',
@@ -118,7 +120,7 @@ export const AddDeviceInventory = () => {
         if(filtered_check_extra.length > 0 || filtered_check_required.length > 0){
             const extra_items = filtered_check_extra.map(item=>"Please check " + item + " is extra header for data")
             const missing_items = filtered_check_required.map(item=>"Please check " + item + " is not available in the header for data")
-            setErrorArray(extra_items.concat(missing_items))
+            // setErrorArray(extra_items.concat(missing_items))
         }
 
         const data_array = rows.shift()
@@ -156,33 +158,32 @@ export const AddDeviceInventory = () => {
     
     return (
         <>
-            <p className="form-heading-para">Add Inventory</p>
-            <hr></hr>
-            <div  className="form-container">
-            <form>
-                <div className = "form-tag">
-                <div className="form-row">
-                    <label className="form-label">Bulk Upload</label>
-                    <input className="form-input" name="bulkUpload" type="file" onChange={e=>onBulkUpload(e)}></input>
+        <p className="form-heading-para">Add Inventory</p>
+        <hr></hr>
+        <div  className="form-container">
+        <form>
+            <div className = "form-tag">
+            <div className="form-row">
+                <label className="form-label">Bulk Upload</label>
+                <input className="form-input" name="bulkUpload" type="file" onChange={e=>onBulkUpload(e)}></input>
+            </div>
+            <div style={{textAlign:"center",marginBottom:"15px",marginTop:"15px"}}>OR</div>
+                <div className="form-rows">
+                    {formFieldUI("Device IMEI", "imeiNo", "text","*")}
+                    {formFieldUI("Device Serial No", "deviceSerialNo", "text","*")}
+                    {formFieldUI("Model Type", "vltdModelName", "text","*")}
                 </div>
-                <div style={{textAlign:"center",marginBottom:"15px",marginTop:"15px"}}>OR</div>
-                    <div className="form-rows">
-                        {formFieldUI("Device IMEI", "imeiNo", "text","*")}
-                        {formFieldUI("Device Serial No", "deviceSerialNo", "text","*")}
-                        {formFieldUI("Model Type", "vltdModelName", "text","*")}
-                    </div>
-                    <div className="form-rows">
-                        {/* {formFieldUI("ESIM Provider", "entitycode", "text","*")} */}
-                        {formFieldUI("ICCID", "iccidNumber", "text","*")}
-                    </div>
+                <div className="form-rows">
+                    {/* {formFieldUI("ESIM Provider", "entitycode", "text","*")} */}
+                    {formFieldUI("ICCID", "iccidNumber", "text","*")}
                 </div>
-                <div className="form-submit-btn">
-                    <button onClick={e=>handleSubmit(e)}>Save</button>
-                </div>
-                        
+            </div>
+            <div className="form-submit-btn">
+                <button onClick={e=>handleSubmit(e)}>Save</button>
+            </div>
+                    
         </form>
-        </div>
-            
+        </div>           
         </>
     )
 }

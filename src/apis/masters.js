@@ -103,6 +103,42 @@ export const getApprovingAuthority = async () => {
 
 // Device Approval from Device Approval ADD
 
+export const getEsimAllProviderIdCodeName = async () => {
+    let token = localStorage.getItem("token");
+
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+    myHeaders.append("accept", "*/*");
+    
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+      
+      const response = await fetch(`${BaseURL}/EsimProvider/getEsimAllProviderIdCodeName`, requestOptions)
+      const responseParsed = await response.json()
+      return responseParsed["result"];
+}
+
+export const getAllDeviceApproval = async () => {
+    let token = localStorage.getItem("token");
+
+    let myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + token);
+    myHeaders.append("accept", "*/*");
+    
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+      };
+      
+      const response = await fetch(`${BaseURL}/DeviceApproval/getalldeviceapproval`, requestOptions)
+      const responseParsed = await response.json()
+      return responseParsed["result"];
+}
+
 export const uploadDocDeviceApproval = async (file) => {
     let token = localStorage.getItem('token');
     let myHeaders = new Headers();

@@ -3,22 +3,19 @@ import { getEntitiesByType } from "../../apis/entities";
 import { LoadingWidget } from "../../components/loading";
 // import { MultipleSelection } from "../../components/multipleSelection";
 import useFormValidation from "../../constants/Validation";
-import { getEsimAllProvider, uploadDocDeviceApproval } from "../../apis/masters";
+import { addDeviceApproval, getApprovingAuthority, getEsimAllProviderIdCodeName, uploadDocDeviceApproval } from "../../apis/masters";
 import FileUploadLoading from "../../components/FileLoader";
-
+import { useNavigate } from "react-router-dom";
+import {GrRadialSelected} from "react-icons/gr";
 
 export const AddDeviceApproval = () => {
-
-    // const [data, setData] = useState({})
-    // const [approvingAuthorityList, setApprovingAuthorityList] = useState(null)
+    const navigate = useNavigate();
+    const [approvingAuthorityList, setApprovingAuthorityList] = useState([]);
     const [esimProviderList, setESIMProviderList] = useState(null)
+    // const [selectedESIMProviders, setSelectedESIMProviders] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [selectedESIM, setSelectedESIM] = useState([])
     const [uploadedFiles, setUploadedFiles] = useState({
-      // tac_certificate: { doctype: "", docname: "" },
-      // cop_certificate: { doctype: "", docname: "" },
-      // technical_spec: { doctype: "", docname: "" },
-      // protocol_spec: { doctype: "", docname: "" },
       tac_certificate:'',
       cop_certificate:'',
       technical_spec:'',
@@ -30,35 +27,29 @@ export const AddDeviceApproval = () => {
     const [protocolSpec, setProtocolSpec] = useState(false);   
     
     useEffect(()=>{
-        // const fetchApprovingAuthorityData = async () => {
-        //     const result = await getEntitiesByType("AUT")
-        //     const mapData = selectionFieldData(result)
-        //     setApprovingAuthorityList(mapData)
-        // }
-        const fetchESIMProviderData = async () => {
-          try {
-            const result = await getEsimAllProvider();
-            // const mapData = multipleSelectionData(result);
-            setESIMProviderList(result);
-          } catch (error) {
-            console.error('Error fetching ESIM providers:', error);
-          }
-        };
-    
-        fetchESIMProviderData();
-        // fetchApprovingAuthorityData()
+      const fetchApprovingAuthorityData = async () => {
+        try {
+          const result = await getApprovingAuthority();
+          setApprovingAuthorityList(result);
+        } catch (error) {
+          console.error("Error fetching approving authorities:", error);
+        }
+      };
 
+      const fetchESIMProviderData = async () => {
+        try {
+          const result = await getEsimAllProviderIdCodeName();
+          setESIMProviderList(result);
+        } catch (error) {
+          console.error('Error fetching ESIM providers:', error);
+        }
+      };
+    
+      fetchESIMProviderData();
+      fetchApprovingAuthorityData();
     },[])
 
-    // const selectionFieldData = (selectionArrayPassed) => {
-    //     return selectionArrayPassed.map(item=> {return {value: item["id"], label: item["entityName"]}})
-    // }
-
-    const multipleSelectionData = (selectionArrayPassed) => {
-      return selectionArrayPassed.map((item) => {
-        return { code: item.id, text: item.entityName };
-      });
-    };
+    console.log(esimProviderList);
 
     // const onChange = (e) => {
     //     const data_new = {...data}
@@ -165,10 +156,7 @@ export const AddDeviceApproval = () => {
             const response = await uploadDocDeviceApproval(file, docname);
             setUploadedFiles((prevFiles) => ({
               ...prevFiles,
-              [docname]: {
-                // doctype: uploadedFiles[docname].doctype,
-                docname: response.filename,
-              },
+              [docname]: response.filename,
             }));
             switch (docname) {
               case "tac_certificate":
@@ -208,61 +196,47 @@ export const AddDeviceApproval = () => {
         }
       };
     
-      // const handleDocumentTypeChange = (e) => {
-      //   const selectedDocumentType = e.target.value;
-      //   const doctype = e.target.name.replace("Type", "");
-      //   const fieldName = doctype.toLowerCase();
-    
-      //   setUploadedFiles((prevFiles) => ({
-      //     ...prevFiles,
-      //     [fieldName]: {
-      //       ...prevFiles[fieldName],
-      //       doctype: selectedDocumentType,
-      //     },
-      //   }));
-    
-      //   console.log("Selected Document Type:", selectedDocumentType);
-      // };
-    
-      console.log("wuqgduqwuwsw--uploadedFiles",uploadedFiles);
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (validateForm()) {
             setIsLoading(true)
+  
             const uploadData = {
               model_code: data.model_code,
               model_name: data.model_name,
-              // is_irnss: data.is_irnss,
-              // certifying_authority: data.certifying_authority,
+              is_irnss: parseInt(data.is_irnss),
+              certifying_authority: data.certifying_authority,
               tac_certificate_no: data.tac_certificate_no,
               tac_certificate: {
-                // ...uploadedFiles.document1,
                 doctype: data.tac_certificate.doctype,
                 docname: uploadedFiles.tac_certificate,
               },
-              // tac_approval_date: data.tac_approval_date,
-              // tac_certificate_expiry: data.tac_certificate_expiry,
+              tac_approval_date: data.tac_approval_date,
+              tac_certificate_expiry: data.tac_certificate_expiry,
               cop_certificate_no: data.cop_certificate_no,
               cop_certificate: {
-                // ...uploadedFiles.document2,
                 doctype: data.cop_certificate.doctype,
                 docname: uploadedFiles.cop_certificate,
               },
-              // cop_approval_date: data.cop_approval_date,
-              // cop_certificate_expiry: data.cop_certificate_expiry,
+              cop_approval_date: data.cop_approval_date,
+              cop_certificate_expiry: data.cop_certificate_expiry,
               technical_spec: {
-                // ...uploadedFiles.document3,
                 doctype: data.technical_spec.doctype,
                 docname: uploadedFiles.technical_spec,
               },
               protocol_spec: {
-                // ...uploadedFiles.document3,
                 doctype: data.protocol_spec.doctype,
                 docname: uploadedFiles.protocol_spec,
-              },
+              }
             };
+            uploadData["esim_allowed"] = esimProviderList.map((provider) => ({
+              esim_id: provider.providerCode,
+              name: provider.providerName
+            }))
             console.log(uploadData, "Uploading Device for Approval")
-            uploadData["esim_allowed"] = 
+            const response = await addDeviceApproval(uploadData);
+            navigate("/deviceApproval/listDeviceApproval")
+            console.log(response);
             setIsLoading(false)
         }
         else{
@@ -280,24 +254,65 @@ export const AddDeviceApproval = () => {
                 </div>)
     }
 
-    const selectFormField = (label,name, dataMap,star) => {
-        return (<div key = {name} className="form-groups">
-                    <label className="form-labels">{label}<sup>{star}</sup></label>
-                    <select required className="form-inputs" name={name} onChange = {e=>onChange(e)}>
-                        <option value = "">Select</option>
-                        {/* {dataMap.map(item=><option value = {item["value"]}>{item["label"]}</option>)} */}
-                    </select>
-                    {errors[name] && <div className="error-message" style={{color:"red",fontSize:"13px"}}>{errors[name]}</div>}
-                </div>)
+    // const selectFormField = (label,name,star,options) => {
+    //     return (<div key = {name} className="form-groups">
+    //                 <label className="form-labels">{label}<sup>{star}</sup></label>
+    //                 <select required className="form-inputs" name={name} onChange = {e=>onChange(e)}>
+    //                     <option value = "">Select</option>
+    //                     {/* {dataMap.map(item=><option value = {item["value"]}>{item["label"]}</option>)} */}
+    //                 </select>
+    //                 {errors[name] && <div className="error-message" style={{color:"red",fontSize:"13px"}}>{errors[name]}</div>}
+    //             </div>)
+    // }
+
+
+    const selectFormField = (label, name, star, options = [], defaultValue) => {
+      return (
+        <div key={name} className="form-groups">
+          <label className="form-labels">
+            {label}
+            <sup>{star}</sup>
+          </label>
+          <select required className="form-inputs" name={name} onChange={e => onChange(e)} value={defaultValue}>
+            <option value="">Select</option>
+            {Array.isArray(options) &&
+            options.map(option => (
+              <option key={option.authId} value={option.authId}>
+                {option.authName}
+              </option>
+          ))}
+          </select>
+          {errors[name] && (
+            <div className="error-message" style={{ color: "red", fontSize: "13px" }}>
+              {errors[name]}
+            </div>
+          )}
+        </div>
+      );
+    };
+
+    const selectFeild1 = (label, name, star) => {  
+      return (
+        <div key={name} className="form-groups">
+          <label className="form-labels">
+            {label}
+            <sup>{star}</sup>
+          </label>
+          <select
+            required
+            className="form-inputs"
+            name={name}
+            onChange={e => onChange(e)}
+          >
+            <option value="">Select</option>
+            <option value="0">False</option>
+            <option value="1">True</option>
+          </select>
+        </div>
+      );
     }
 
     const fileUploadUI = (label, name, type, star, isLoading) => {
-      // const documentTypes = [
-      //   "Adhar Card",
-      //   "Driving License",
-      //   "Voter ID",
-      //   "Passport",
-      // ];
       let fileUploadLoading = false;
       switch (name) {
         case "tac_certificate":
@@ -322,21 +337,6 @@ export const AddDeviceApproval = () => {
             {label}
             <sup>{star}</sup>
           </label>
-          {/* Select field for document type */}
-          {/* <div>
-            <select
-              className="select-groups"
-              name={`${name}Type`}
-              onChange={(e) => handleDocumentTypeChange(e)}
-            >
-              <option value="">Select Document Type</option>
-              {documentTypes.map((type, index) => (
-                <option key={index} value={type}>
-                  {type}
-                </option>
-              ))}
-            </select>
-          </div> */}
           <input
             required
             className="form-inputs"
@@ -371,9 +371,12 @@ export const AddDeviceApproval = () => {
                 <div className = "form-tag">
                     <p className="form-identifire-para">Device identifiers</p>
                     <div className="form-rows">
+                        {formFieldUI("Model Code", "model_code", "text","*")}
+                        {selectFeild1("Is IRNSS", "is_irnss","*")}
+                    </div>
+                    <div className="form-rows">
                         {formFieldUI("Model Name", "model_name", "text","*")}
-                        {selectFormField("Is IRNSS", "is_irnss", [{value: "No", label: "No"}, {value: "Yes", label: "Yes"}],"*")}
-                        {selectFormField("Certifying Authority", "certifying_authority","*")}
+                        {selectFormField("Certifying Authority", "certifying_authority","*",approvingAuthorityList)}
                     </div>
                     <p className="form-identifire-para">TAC Certificate Details</p>
                     <div className="form-rows">
@@ -402,9 +405,11 @@ export const AddDeviceApproval = () => {
                     <div className="form-rows">
                       {esimProviderList ? (
                         <MultipleSelection
-                          esimProviderList={esimProviderList}
-                          selectedESIM={selectedESIM}
-                          setSelectedESIM={setSelectedESIM}
+                          // esimProviderList={esimProviderList}
+                          // selectedESIM={selectedESIM}
+                          // setSelectedESIM={setSelectedESIM}
+                          data={esimProviderList}
+                          updateList = {setESIMProviderList}
                         />
                       ) : null}
                     </div>
@@ -421,31 +426,39 @@ export const AddDeviceApproval = () => {
 }
 
 
-const MultipleSelection = ({ esimProviderList, selectedESIM, setSelectedESIM }) => {
 
-  const handleSelection = (providerCode) => {
-    const updatedSelection = selectedESIM.includes(providerCode)
-      ? selectedESIM.filter((selectedCode) => selectedCode !== providerCode)
-      : [...selectedESIM, providerCode];
-    setSelectedESIM(updatedSelection);
-  };
-  console.log(selectedESIM);
+const MultipleSelection = ({data, updateList}) => {
 
-  return (
-    <div>
-      {esimProviderList.map((provider) => (
-        <div key={provider.providerCode}>
-          <label>
-            <input
-              type="checkbox"
-              value={provider.providerCode}
-              checked={selectedESIM.includes(provider.providerCode)}
-              onChange={() => handleSelection(provider.providerCode)}
-            />
-            {provider.providerName}
-          </label>
-        </div>
-      ))}
-    </div>
-  );
-};
+    const [uiList, setUIList] = useState([])
+
+    useEffect(() =>{
+        if(data){
+            const newData = data.map(item=>{
+                item["isActive"] = false
+                return item})
+                console.log(newData);
+            setUIList(newData)
+        }
+        
+    },[])
+
+    const onSelection = (selectedItem) => {
+        const changedArray = uiList.map(item => {
+            if(item["providerCode"] == selectedItem["providerCode"]){
+                item["isActive"] = !item["isActive"]        
+            }
+            return item})
+        setUIList(changedArray)
+        updateList(changedArray.filter(item=>item["isActive"]===true))
+    }
+
+    return <div>
+    {uiList.map(item=><div key = {item.id} className={"" + (item["isActive"] ? "bg-warning" : "bg-light")} onClick={()=>onSelection(item)}>
+                        <p className="map-roles-text">
+                            {item.providerName}
+                        </p>
+                        {item["isActive"] ? <GrRadialSelected className=""/> : null }
+                        </div>
+        )}
+</div>
+}

@@ -7,7 +7,6 @@ export const  UserProvider = ({ children }) => {
   const [userDetails, setUserDetails] = useState(null);
 
   const user = (localStorage.getItem('userObject') && JSON.parse(localStorage.getItem('userObject'))["loginResp"]) || null
-  
 
   useEffect(()=>{
     if (user!==null){
@@ -25,6 +24,10 @@ export const  UserProvider = ({ children }) => {
     localStorage.removeItem("id")
     localStorage.removeItem("userObject")
   }
+
+  
+
+
 
   return (
     <UserContext.Provider value={userDetails}>

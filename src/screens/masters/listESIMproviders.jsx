@@ -3,7 +3,7 @@ import { getEntitiesByType } from "../../apis/entities"
 import {DynamicTable} from "../../components/table"
 import { generatePDF } from "../../helpers/pdf"
 import DetailModal from "../../components/DetailModal"
-import { getEsimAllProvider } from "../../apis/masters"
+import { getEsimAllProvider, getEsimAllProviderIdCodeName } from "../../apis/masters"
 import { Table } from "../../components/DynamicTable"
 
 export const ESIMProviderList = () => {
@@ -13,6 +13,7 @@ export const ESIMProviderList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [searchField, setSearchField] = useState("");
 
+    let user;
     // Modal open and close function 
     const handleModalOpen = (item) => {
         setSelectedESIM(item);
@@ -25,9 +26,14 @@ export const ESIMProviderList = () => {
         };
 
     useEffect(()=>{
+
         const fetchData = async () => {
+            console.warn("test","result2")
+            user = localStorage.getItem("userType")
+
             const result = await getEsimAllProvider()
             console.log(result, "ESM")
+            
             setESIMProviders(result)
         }
         fetchData()
@@ -59,7 +65,7 @@ export const ESIMProviderList = () => {
     return(
         <div>
             <div className="table-header-section">
-            <p className="table-listp">ESIM Provider List</p>
+            {user==="RTO"?<p className="table-listp">ESIM Provider Details</p>:<p className="table-listp">ESIM Provider List</p>}
                 {/* <div className="download-btn-container">
                     <button onClick={()=>downloadExcel(esimProviders,'imp')}>Download as Ms Excel</button>
                     <button onClick={handlePDFDownload}>Download as PDF</button>

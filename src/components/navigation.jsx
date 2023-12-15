@@ -76,7 +76,7 @@ const Sidebar = ({navigationOpen}) => {
 
   if (user === "DST") {
     navigation_panel = [
-      { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
+      // { baseRoute: "dashboard", label: "Dashboard",icon:<AiFillDashboard/>, default: "/" },
       ...userRoles.map((data,index) => ({
         baseRoute: `/${userCodes[index]}`,
         label: data,
@@ -93,7 +93,7 @@ const Sidebar = ({navigationOpen}) => {
         baseRoute: `/${userCodes[index]}`,
         label: data,
         icon:<AiFillDashboard/>,
-        default: "/",
+        default: "",
       })),
     ];
   }
